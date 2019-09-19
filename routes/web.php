@@ -12,5 +12,6 @@
 */
 
 Route::get('/', function () {
-    return view('template/template1');
+    //return view('template/contenido');
+    return view('dashboard/dashboardColaborador');
 });
