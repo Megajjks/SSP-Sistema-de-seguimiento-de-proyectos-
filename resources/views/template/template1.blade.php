@@ -118,8 +118,14 @@
 <!-- End Sidebar -->
 
 <!-- contenido de cada pagina -->
-<div id="app">
-	@yield('contenidopag')
+<div id="app" class="main-panel">
+	<div class="content">
+		<div class="panel-header">
+			<div class="page-inner py-5">
+				@yield('contenidopag')
+			</div>
+		</div>
+	</div>
 </div>
 
     <!--**********************************

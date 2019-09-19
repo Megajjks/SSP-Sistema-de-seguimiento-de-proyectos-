@@ -13,5 +13,7 @@
 
 Route::get('/', function () {
     //return view('template/contenido');
-    return view('dashboard/dashboardColaborador');
+    return view('template/contenido');
 });
+
+Route::resource('/proyecto','ProyectoController');

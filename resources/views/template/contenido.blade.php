@@ -1,10 +1,10 @@
 @extends('template.template1')
 @section('contenidopag')
     <template v-if="menu==0">
-        <example-component></example-component>
+        <card-proyecto></card-proyecto>
     </template>
     <template v-if="menu==1">
-        <h1>contenido1</h1>
+        <h1>sds</h1>
     </template>
         <template v-if="menu==2">
     <h1>contenido2</h1>
