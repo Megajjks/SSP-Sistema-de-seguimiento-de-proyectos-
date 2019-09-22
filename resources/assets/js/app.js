@@ -16,7 +16,8 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('card-proyecto', require('./components/CardProyecto.vue'));
+Vue.component('proyectos-asignados', require('./components/ProyectosAsignados.vue'));
+Vue.component('proyectos-propios', require('./components/ProyectosPropios.vue'));
 
 const app = new Vue({
     el: '#app',

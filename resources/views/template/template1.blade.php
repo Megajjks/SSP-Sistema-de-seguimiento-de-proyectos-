@@ -166,12 +166,8 @@
 	<!-- Sweet Alert -->
 	<script src="js/plugin/sweetalert/sweetalert.min.js"></script>
 
-	<!-- Atlantis JS -->
-	<script src="js/atlantis.min.js"></script>
-
-	<!-- Atlantis DEMO methods, don't include it in your project! -->
-	<script src="js/setting-demo.js"></script>
-	<script src="js/demo.js"></script>
+<!-- Atlantis JS -->
+<script src="js/atlantis.min.js"></script>
 	<script>
 		Circles.create({
 			id:'circles-1',
@@ -217,57 +213,9 @@
 			styleWrapper:true,
 			styleText:true
 		})
-
-		var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
-
-		var mytotalIncomeChart = new Chart(totalIncomeChart, {
-			type: 'bar',
-			data: {
-				labels: ["S", "M", "T", "W", "T", "F", "S", "S", "M", "T"],
-				datasets : [{
-					label: "Total Income",
-					backgroundColor: '#ff9e27',
-					borderColor: 'rgb(23, 125, 255)',
-					data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
-				}],
-			},
-			options: {
-				responsive: true,
-				maintainAspectRatio: false,
-				legend: {
-					display: false,
-				},
-				scales: {
-					yAxes: [{
-						ticks: {
-							display: false //this will remove only the label
-						},
-						gridLines : {
-							drawBorder: false,
-							display : false
-						}
-					}],
-					xAxes : [ {
-						gridLines : {
-							drawBorder: false,
-							display : false
-						}
-					}]
-				},
-			}
-		});
-
-		$('#lineChart').sparkline([105,103,123,100,95,105,115], {
-			type: 'line',
-			height: '70',
-			width: '100%',
-			lineWidth: '2',
-			lineColor: '#ffa534',
-			fillColor: 'rgba(255, 165, 52, .14)'
-		});
 	</script>
-    <script src="plugins/common/common.min.js"></script>
-	<script src="js/plantilla.js"></script>
+	<!--<script src="js/plantilla.js"></script>-->
 	<script src="js/app.js"></script>
+	
 </body>
 </html>

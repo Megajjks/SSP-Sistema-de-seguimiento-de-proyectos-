@@ -1,7 +1,8 @@
 @extends('template.template1')
 @section('contenidopag')
     <template v-if="menu==0">
-        <card-proyecto></card-proyecto>
+        <proyectos-asignados></proyectos-asignados>
+        <proyectos-propios></proyectos-propios>
     </template>
     <template v-if="menu==1">
         <h1>sds</h1>

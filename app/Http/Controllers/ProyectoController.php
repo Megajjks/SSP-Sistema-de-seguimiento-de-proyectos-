@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Proyecto; //importamas el modelo al que estara vinculado
+use Carbon\Carbon; //para el manejo de fechas actuales
 
 class ProyectoController extends Controller
 {
@@ -42,6 +43,7 @@ class ProyectoController extends Controller
         $proyecto->describcion = $request->describcion;
         $proyecto->estado_actual = 0;
         $proyecto->ncolaboradores = 1;
+        //$proyecto->estatus = "Asignación";
         $proyecto->fec_ini = $fechahoy->format('Y-m-d');
         $proyecto->save();
 

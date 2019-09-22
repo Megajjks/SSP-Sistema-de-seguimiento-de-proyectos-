@@ -38,25 +38,25 @@
 					</div>
 					<ul class="nav nav-primary">
 						<li @click="menu=0" class="nav-item">
-							<a href="">
+							<a href="#">
 								<i class="fas fa-tachometer-alt"></i>
 								<p>Dashboard</p>
 							</a>
 						</li>
 						<li @click="menu=1" class="nav-item">
-							<a href="">
+							<a href="#">
 								<i class="fas fa-rocket"></i>
 								<p>Proyectos</p>
 							</a>
 						</li>
 						<li @click="menu=2" class="nav-item">
-							<a href="">
+							<a href="#">
 								<i class="fas fa-history"></i>
 								<p>Linea del tiempo</p>
 							</a>
 						</li>
 						<li @click="menu=3" class="nav-item">
-							<a href="">
+							<a href="#">
 								<i class="fas fa-book"></i>
 								<p>Reportes</p>
 							</a>
