@@ -49330,7 +49330,7 @@ exports = module.exports = __webpack_require__(49)(false);
 
 
 // module
-exports.push([module.i, "\n.modal-content {\r\n  width: 100% !important;\r\n  position: absolute !important;\n}\n.mostrar {\r\n  display: list-item !important;\r\n  opacity: 1 !important;\r\n  position: absolute !important;\r\n  background-color: #3c29297a !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.modal-content {\r\n  width: 100% !important;\r\n  position: absolute !important;\n}\n.mostrar {\r\n  display: list-item !important;\r\n  opacity: 1 !important;\r\n  position: absolute !important;\r\n  background-color: #3c29297a !important;\n}\n.div-error{\r\n  display: flex;\r\n  justify-content: center;\n}\n.text-error{\r\n  color: red !important;\r\n  font-weight: bold;\n}\r\n", ""]);
 
 // exports
 
@@ -49801,6 +49801,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -49816,7 +49823,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       arrayProyecto: [],
       modal: 0,
       tituloModal: '',
-      tipoAccion: 0
+      tipoAccion: 0,
+      errorProyecto: 0,
+      errorMostrarMsjProyecto: []
     };
   },
 
@@ -49832,6 +49841,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     registrarProyecto: function registrarProyecto() {
+      //validación de datos previos
+      if (this.validarProyecto()) {
+        return;
+      }
+
       var metodo = this;
       axios.post('/proyecto', {
         'nombre': this.nombre,
@@ -49842,6 +49856,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).catch(function (error) {
         console.log(error);
       });
+    },
+    validarProyecto: function validarProyecto() {
+      this.errorProyecto = 0;
+      this.errorMostrarMsjProyecto = [];
+
+      if (!this.nombre) this.errorMostrarMsjProyecto.push("El nombre del proyecto no puede estar vacio");
+      if (!this.describcion) this.errorMostrarMsjProyecto.push("La descripción del proyecto no puede estar vacio");
+      if (this.errorMostrarMsjProyecto.length) this.errorProyecto = 1;
+      return this.errorProyecto;
     },
     cerrarModal: function cerrarModal() {
       this.modal = 0;
@@ -50081,7 +50104,36 @@ var render = function() {
                         }
                       }
                     })
-                  ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.errorProyecto,
+                          expression: "errorProyecto"
+                        }
+                      ],
+                      staticClass: "form-group row div-error"
+                    },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "text-center text-error" },
+                        _vm._l(_vm.errorMostrarMsjProyecto, function(error) {
+                          return _c("div", {
+                            key: error,
+                            staticClass: "alert alert-danger",
+                            domProps: { textContent: _vm._s(error) }
+                          })
+                        }),
+                        0
+                      )
+                    ]
+                  )
                 ])
               ]),
               _vm._v(" "),

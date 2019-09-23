@@ -89,6 +89,13 @@
                 <label for="exampleFormControlTextarea1">Descripción</label>
                 <textarea class="form-control input-solid" v-model="describcion" rows="5"></textarea>
               </div>
+              <div v-show="errorProyecto" class="form-group row div-error">
+                <div class="text-center text-error">
+                  <div v-for="error in errorMostrarMsjProyecto" :key="error" v-text="error" class="alert alert-danger">
+
+                  </div>
+                </div>
+              </div>
             </form>
           </div>
           <div class="modal-footer">
@@ -130,7 +137,9 @@ export default {
       arrayProyecto: [],
       modal: 0,
       tituloModal: '',
-      tipoAccion: 0
+      tipoAccion: 0,
+      errorProyecto: 0,
+      errorMostrarMsjProyecto : []
     };
   },
   methods: {
@@ -148,6 +157,11 @@ export default {
         });
     },
     registrarProyecto() {
+      //validación de datos previos
+      if(this.validarProyecto()){
+        return;
+      }
+
       let metodo = this;
       axios.post('/proyecto', {
           'nombre' : this.nombre,
@@ -160,6 +174,16 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
+    },
+
+    validarProyecto() {
+      this.errorProyecto = 0;
+      this.errorMostrarMsjProyecto = [];
+
+      if (!this.nombre) this.errorMostrarMsjProyecto.push("El nombre del proyecto no puede estar vacio");
+      if (!this.describcion) this.errorMostrarMsjProyecto.push("La descripción del proyecto no puede estar vacio");
+      if (this.errorMostrarMsjProyecto.length) this.errorProyecto = 1;
+      return this.errorProyecto;
     },
 
     cerrarModal() {
@@ -211,5 +235,13 @@ export default {
   opacity: 1 !important;
   position: absolute !important;
   background-color: #3c29297a !important;
+}
+.div-error{
+  display: flex;
+  justify-content: center;
+}
+.text-error{
+  color: red !important;
+  font-weight: bold;
 }
 </style>
