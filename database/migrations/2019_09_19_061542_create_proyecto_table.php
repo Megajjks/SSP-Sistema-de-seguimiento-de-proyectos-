@@ -19,7 +19,7 @@ class CreateProyectoTable extends Migration
             $table->text('describcion');
             $table->integer('estado_actual');
             $table->string('estatus', 50)->default("asignacion");
-            $table->integer('ncolaboradores');
+            $table->integer('ncolaboradores')->nullable();
             $table->date('fec_ini');
             $table->date('fec_fin')->nullable();
             $table->timestamps();

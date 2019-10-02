@@ -18,7 +18,7 @@
         v-for="proyecto in arrayProyecto"
         :key="proyecto.id_proyecto"
       >
-        <div class="card card-round card-efecto">
+        <div class="card card-round card-efecto" @click="mostrarproyecto(proyecto)">
           <div class="card-header">
             <h2 class="card-title" v-text="proyecto.nombre"></h2>
           </div>
@@ -218,6 +218,9 @@ export default {
           }
           break;
       }
+    },
+    mostrarproyecto(data=[]){
+      console.log(data);
     }
   },
   mounted() {

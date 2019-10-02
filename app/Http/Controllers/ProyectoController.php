@@ -57,7 +57,8 @@ class ProyectoController extends Controller
      */
     public function show($id)
     {
-        //
+        //$proyecto = Proyecto::find($id);
+        //return response()->json($proyecto);
     }
 
     /**
@@ -68,7 +69,8 @@ class ProyectoController extends Controller
      */
     public function edit($id)
     {
-        //
+        //$proyecto = Proyecto::find($id);
+        //return response()->json($proyecto);
     }
 
     /**

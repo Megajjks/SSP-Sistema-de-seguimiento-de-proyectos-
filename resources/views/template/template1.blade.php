@@ -113,12 +113,13 @@
 			<!-- End Navbar -->
 	</div>
 
-<!-- Sidebar -->
-	@include('template.sidebar')
-<!-- End Sidebar -->
+
 
 <!-- contenido de cada pagina -->
 <div id="app" class="main-panel">
+<!-- Sidebar -->
+	@include('template.sidebar')
+<!-- End Sidebar -->
 	<div class="content">
 		<div class="panel-header">
 			<div class="page-inner py-5">

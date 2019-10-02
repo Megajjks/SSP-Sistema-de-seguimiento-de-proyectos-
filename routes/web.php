@@ -13,6 +13,11 @@
 
 Route::get('/', function () {
     //return view('template/contenido');
+    return view('login/login');
+});
+
+Route::get('/home', function () {
+    //return view('template/contenido');
     return view('template/contenido');
 });
 
