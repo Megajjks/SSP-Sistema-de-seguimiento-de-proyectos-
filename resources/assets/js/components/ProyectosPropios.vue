@@ -13,11 +13,13 @@
       </button>
     </div>
     <div class="col-md-12 row">
+      
       <div
         class="col-md-5 animated fadeIn"
         v-for="proyecto in arrayProyecto"
         :key="proyecto.id_proyecto"
       >
+      <a href="http://localhost:8000/actividad1">
         <div class="card card-round card-efecto" @click="mostrarproyecto(proyecto)">
           <div class="card-header">
             <h2 class="card-title" v-text="proyecto.nombre"></h2>
@@ -61,6 +63,7 @@
             </div>
           </div>
         </div>
+        </a>
       </div>
     </div>
 

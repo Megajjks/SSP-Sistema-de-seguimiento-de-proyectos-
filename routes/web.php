@@ -21,6 +21,12 @@ Route::get('/home', function () {
     return view('template/contenido');
 });
 
+Route::get('/actividad1', function () {
+    //return view('template/contenido');
+    return view('template/vproyecto');
+});
+
+
 Route::resource('/proyecto','ProyectoController');
 //Route::get('/proyecto','ProyectoController@index');
 //Route::post('/proyecto/registrar','ProyectoController@store');

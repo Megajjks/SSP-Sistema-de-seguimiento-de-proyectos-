@@ -20,6 +20,9 @@ Vue.component('proyectos-asignados', require('./components/ProyectosAsignados.vu
 Vue.component('proyectos-propios', require('./components/ProyectosPropios.vue'));
 Vue.component('vista-proyecto', require('./components/VistaProyecto.vue'));
 Vue.component('error-404', require('./components/Error404-b.vue'));
+Vue.component('lista-actividades',require('./components/ListaActividades.vue'));
+Vue.component('actividad',require('./components/Actividad.vue'));
+Vue.component('datos-proyecto',require("./components/DatosProyecto.vue"));
 
 const app = new Vue({
     el: '#app',
