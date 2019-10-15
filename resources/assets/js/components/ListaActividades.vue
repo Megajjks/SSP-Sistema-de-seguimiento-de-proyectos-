@@ -16,14 +16,45 @@
             </button>
           </div>
           <div class="card-body">
-            <actividad/>
-            <actividad/>
-            <actividad/>
-            <actividad/>
-            <actividad/>
-            <actividad/>
-            <actividad/>
-            <actividad/>
+            <!--Card actividades-->
+            <div class="col-md-12 d-flex flex-column mb-2">
+              <div
+                class="col-md-12 d-flex justify-content-between align-items-center px-0 py-0 my-0 mx-0"
+              >
+                <div class="col-md-6 d-flex justify-content-start">
+                  <h2>
+                    <span class="btn pl-0 pr-2 py-0 my-0" style="font-size: 1em">
+                      <i class="far fa-check-circle"></i>
+                    </span>Revisión de expendientes
+                  </h2>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                  <span
+                    class="btn pl-0 pr-2 py-0 my-0"
+                    style="font-size: 1.5em; color: Dodgerblue"
+                    @click="abrirModal('actividad','editar')"
+                  >
+                    <i class="fas fa-edit"></i>
+                  </span>
+                  <span class="btn pl-0 pr-2 py-0 my-0" style="font-size: 1.5em; color: Tomato;">
+                    <i class="fas fa-trash-alt"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center px-0 py-0 my-0 mx-0">
+                <div class="col-md-6 d-flex justify-content-start">
+                  <p class="btn-danger btn-round btn-sm mr-1">Alto</p>
+                  <p class="btn-default btn-round btn-sm mr-1">Para:Jayro Salazar</p>
+                  <p class="btn-danger btn-round btn-sm mr-1">Expira: 06/10/2019</p>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                  <p class="btn-warning btn-round btn-sm">En progreso</p>
+                  <p class="btn-primary btn-border btn-round btn-sm">En evaluación</p>
+                  <p class="btn-danger btn-border btn-round btn-sm">En corrección</p>
+                  <p class="btn-success btn-border btn-round btn-sm">Aprovado</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -103,9 +134,9 @@
 </template>
 
 <script>
-import Actividad from './Actividad'
+import Actividad from "./Actividad";
 export default {
-  component:{
+  component: {
     Actividad
   },
   data() {

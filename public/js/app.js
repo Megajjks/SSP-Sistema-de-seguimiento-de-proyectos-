@@ -50092,19 +50092,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -50145,7 +50132,10 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: "col-md-12 d-flex justify-content-between py-4 mx-0" },
+      {
+        staticClass:
+          "col-md-12 d-flex justify-content-between align-items-center py-4 mx-0"
+      },
       [
         _c("span", { staticClass: "btn btn-lg" }, [
           _c("i", { staticClass: "fas fa-arrow-left" })
@@ -50155,21 +50145,7 @@ var staticRenderFns = [
           _vm._v("Residencia 2019-2020")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "d-flex justify-content-around" }, [
-          _c("button", { staticClass: "btn btn-primary btn-round mx-2" }, [
-            _c("span", { staticClass: "btn-label" }, [
-              _c("i", { staticClass: "fas fa-edit" })
-            ]),
-            _vm._v("\n        Modificar\n      ")
-          ]),
-          _vm._v(" "),
-          _c("button", { staticClass: "btn btn-danger btn-round" }, [
-            _c("span", { staticClass: "btn-label" }, [
-              _c("i", { staticClass: "fas fa-trash-alt" })
-            ]),
-            _vm._v("\n        Eliminar\n      ")
-          ])
-        ])
+        _c("span")
       ]
     )
   }
@@ -50720,6 +50696,37 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actividad__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actividad___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Actividad__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -51420,28 +51427,47 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "card-body" },
-            [
-              _c("actividad"),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "col-md-12 d-flex flex-column mb-2" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "col-md-12 d-flex justify-content-between align-items-center px-0 py-0 my-0 mx-0"
+                },
+                [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "col-md-6 d-flex justify-content-end" },
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "btn pl-0 pr-2 py-0 my-0",
+                          staticStyle: {
+                            "font-size": "1.5em",
+                            color: "Dodgerblue"
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.abrirModal("actividad", "editar")
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-edit" })]
+                      ),
+                      _vm._v(" "),
+                      _vm._m(2)
+                    ]
+                  )
+                ]
+              ),
               _vm._v(" "),
-              _c("actividad"),
-              _vm._v(" "),
-              _c("actividad"),
-              _vm._v(" "),
-              _c("actividad"),
-              _vm._v(" "),
-              _c("actividad"),
-              _vm._v(" "),
-              _c("actividad"),
-              _vm._v(" "),
-              _c("actividad"),
-              _vm._v(" "),
-              _c("actividad")
-            ],
-            1
-          )
+              _vm._m(3)
+            ])
+          ])
         ])
       ])
     ]),
@@ -51486,11 +51512,11 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("form", [
-                  _vm._m(1),
+                  _vm._m(4),
                   _vm._v(" "),
-                  _vm._m(2),
+                  _vm._m(5),
                   _vm._v(" "),
-                  _vm._m(3),
+                  _vm._m(6),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -51580,6 +51606,82 @@ var staticRenderFns = [
     return _c("span", { staticClass: "btn-label" }, [
       _c("i", { staticClass: "fa fa-plus-circle" })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-6 d-flex justify-content-start" }, [
+      _c("h2", [
+        _c(
+          "span",
+          {
+            staticClass: "btn pl-0 pr-2 py-0 my-0",
+            staticStyle: { "font-size": "1em" }
+          },
+          [_c("i", { staticClass: "far fa-check-circle" })]
+        ),
+        _vm._v("Revisión de expendientes\n                ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      {
+        staticClass: "btn pl-0 pr-2 py-0 my-0",
+        staticStyle: { "font-size": "1.5em", color: "Tomato" }
+      },
+      [_c("i", { staticClass: "fas fa-trash-alt" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "d-flex justify-content-between align-items-center px-0 py-0 my-0 mx-0"
+      },
+      [
+        _c("div", { staticClass: "col-md-6 d-flex justify-content-start" }, [
+          _c("p", { staticClass: "btn-danger btn-round btn-sm mr-1" }, [
+            _vm._v("Alto")
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "btn-default btn-round btn-sm mr-1" }, [
+            _vm._v("Para:Jayro Salazar")
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "btn-danger btn-round btn-sm mr-1" }, [
+            _vm._v("Expira: 06/10/2019")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6 d-flex justify-content-end" }, [
+          _c("p", { staticClass: "btn-warning btn-round btn-sm" }, [
+            _vm._v("En progreso")
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "btn-primary btn-border btn-round btn-sm" }, [
+            _vm._v("En evaluación")
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "btn-danger btn-border btn-round btn-sm" }, [
+            _vm._v("En corrección")
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "btn-success btn-border btn-round btn-sm" }, [
+            _vm._v("Aprovado")
+          ])
+        ])
+      ]
+    )
   },
   function() {
     var _vm = this
