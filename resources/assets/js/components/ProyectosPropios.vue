@@ -13,57 +13,70 @@
       </button>
     </div>
     <div class="col-md-12 row">
-      
       <div
         class="col-md-5 animated fadeIn"
         v-for="proyecto in arrayProyecto"
         :key="proyecto.id_proyecto"
       >
-      <a href="http://localhost:8000/actividad1">
-        <div class="card card-round card-efecto" @click="mostrarproyecto(proyecto)">
-          <div class="card-header">
-            <h2 class="card-title" v-text="proyecto.nombre"></h2>
-          </div>
-          <div class="card-body">
-            <div class="row d-flex justify-content-between">
-              <div class="col-md-6 card-dark bg-primary-gradient card-round blockquote text-center">
-                <p class="h4 mx-auto">0 Tareas faltantes</p>
-              </div>
-              <div class="col-md-6 card-dark bg-success-gradient card-round blockquote text-center">
-                <p class="h4 mx-auto">0 Tareas realizadas</p>
+
+          <div class="card card-round card-efecto" @click="mostrarproyecto(proyecto)">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h2 class="card-title" v-text="proyecto.nombre"></h2>
+              <span class="btn btn-lg" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <i class="fas fa-ellipsis-v"></i>
+              </span>
+              <div class="collapse" id="collapseExample">
+                  <a class="dropdown-item" href="#"><span><i class="fas fa-edit"></i></span>Editar</a>
+                  <a class="dropdown-item" href="#"><span><i class="fas fa-trash-alt"></i></span>Eliminar</a>
               </div>
             </div>
-            <div class="row mt--2">
-              <div class="col-md-5 text-center blockquote">
-                <p class="h4 mx-auto">Estatus actual</p>
-              </div>
-              <div class="col-md-7 card-dark bg-primary-gradient card-round text-center blockquote">
-                <p class="h4 mx-auto" v-text="proyecto.estatus"></p>
-              </div>
-            </div>
-            <div class="progress-card">
-              <div class="progress-status">
-                <span class="text-muted">Avance del proyecto</span>
-                <span class="text-muted fw-bold" v-text="proyecto.estado_actual">%</span>
-              </div>
-              <div class="progress" style="height: 10xpx;">
+            <a href="http://localhost:8000/actividad1">
+            <div class="card-body">
+              <div class="row d-flex justify-content-between">
                 <div
-                  class="progress-bar bg-success-gradient animated slideInLeft"
-                  role="progressbar"
-                  style="width: 10%"
-                  aria-valuenow="10"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title
-                  data-original-title="70%"
-                ></div>
+                  class="col-md-6 card-dark bg-primary-gradient card-round blockquote text-center"
+                >
+                  <p class="h4 mx-auto">0 Tareas faltantes</p>
+                </div>
+                <div
+                  class="col-md-6 card-dark bg-success-gradient card-round blockquote text-center"
+                >
+                  <p class="h4 mx-auto">0 Tareas realizadas</p>
+                </div>
+              </div>
+              <div class="row mt--2">
+                <div class="col-md-5 text-center blockquote">
+                  <p class="h4 mx-auto">Estatus actual</p>
+                </div>
+                <div
+                  class="col-md-7 card-dark bg-primary-gradient card-round text-center blockquote"
+                >
+                  <p class="h4 mx-auto" v-text="proyecto.estatus"></p>
+                </div>
+              </div>
+              <div class="progress-card">
+                <div class="progress-status">
+                  <span class="text-muted">Avance del proyecto</span>
+                  <span class="text-muted fw-bold" v-text="proyecto.estado_actual">%</span>
+                </div>
+                <div class="progress" style="height: 10xpx;">
+                  <div
+                    class="progress-bar bg-success-gradient animated slideInLeft"
+                    role="progressbar"
+                    style="width: 10%"
+                    aria-valuenow="10"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title
+                    data-original-title="70%"
+                  ></div>
+                </div>
               </div>
             </div>
+            </a>
           </div>
-        </div>
-        </a>
       </div>
     </div>
 
@@ -94,9 +107,12 @@
               </div>
               <div v-show="errorProyecto" class="form-group row div-error">
                 <div class="text-center text-error">
-                  <div v-for="error in errorMostrarMsjProyecto" :key="error" v-text="error" class="alert alert-danger">
-
-                  </div>
+                  <div
+                    v-for="error in errorMostrarMsjProyecto"
+                    :key="error"
+                    v-text="error"
+                    class="alert alert-danger"
+                  ></div>
                 </div>
               </div>
             </form>
@@ -129,20 +145,20 @@
 export default {
   data() {
     return {
-      nombre: '',
-      describcion: '',
+      nombre: "",
+      describcion: "",
       estatus: 0,
-      estatus_actual: '',
-      fec_ini: '',
-      fec_fin: '',
-      tareascheck: '0',
-      tareasnocheck: '0',
+      estatus_actual: "",
+      fec_ini: "",
+      fec_fin: "",
+      tareascheck: "0",
+      tareasnocheck: "0",
       arrayProyecto: [],
       modal: 0,
-      tituloModal: '',
+      tituloModal: "",
       tipoAccion: 0,
       errorProyecto: 0,
-      errorMostrarMsjProyecto : []
+      errorMostrarMsjProyecto: []
     };
   },
   methods: {
@@ -161,14 +177,15 @@ export default {
     },
     registrarProyecto() {
       //validación de datos previos
-      if(this.validarProyecto()){
+      if (this.validarProyecto()) {
         return;
       }
 
       let metodo = this;
-      axios.post('/proyecto', {
-          'nombre' : this.nombre,
-          'describcion' : this.describcion
+      axios
+        .post("/proyecto", {
+          nombre: this.nombre,
+          describcion: this.describcion
         })
         .then(function(response) {
           metodo.cerrarModal();
@@ -183,21 +200,27 @@ export default {
       this.errorProyecto = 0;
       this.errorMostrarMsjProyecto = [];
 
-      if (!this.nombre) this.errorMostrarMsjProyecto.push("El nombre del proyecto no puede estar vacio");
-      if (!this.describcion) this.errorMostrarMsjProyecto.push("La descripción del proyecto no puede estar vacio");
+      if (!this.nombre)
+        this.errorMostrarMsjProyecto.push(
+          "El nombre del proyecto no puede estar vacio"
+        );
+      if (!this.describcion)
+        this.errorMostrarMsjProyecto.push(
+          "La descripción del proyecto no puede estar vacio"
+        );
       if (this.errorMostrarMsjProyecto.length) this.errorProyecto = 1;
       return this.errorProyecto;
     },
 
     cerrarModal() {
       this.modal = 0;
-      this.tituloModal = '';
-      this.nombre = '';
-      this.describcion = '';
+      this.tituloModal = "";
+      this.nombre = "";
+      this.describcion = "";
       this.estatus = 0;
-      this.estatus_actual = '';
-      this.fec_ini = '';
-      this.fec_fin = '';
+      this.estatus_actual = "";
+      this.fec_ini = "";
+      this.fec_fin = "";
     },
 
     abrirModal(modelo, accion, data = []) {
@@ -205,15 +228,15 @@ export default {
         case "categoria":
           {
             switch (accion) {
-              case 'registrar': {
+              case "registrar": {
                 this.modal = 1;
-                this.tituloModal = '¿Qué construiras hoy?';
-                this.nombre = '';
-                this.describcion = '';
+                this.tituloModal = "¿Qué construiras hoy?";
+                this.nombre = "";
+                this.describcion = "";
                 this.estatus = 0;
-                this.estatus_actual = '';
-                this.fec_ini = '';
-                this.fec_fin = '';
+                this.estatus_actual = "";
+                this.fec_ini = "";
+                this.fec_fin = "";
                 this.tipoAccion = 1;
                 break;
               }
@@ -222,7 +245,7 @@ export default {
           break;
       }
     },
-    mostrarproyecto(data=[]){
+    mostrarproyecto(data = []) {
       console.log(data);
     }
   },
