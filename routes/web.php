@@ -31,3 +31,5 @@ Route::resource('/proyecto','ProyectoController');
 //Route::get('/proyecto','ProyectoController@index');
 //Route::post('/proyecto/registrar','ProyectoController@store');
 //Route::put('/proyecto/actualizar','ProyectoController@update');
+
+Route::resource('/lista-actividades','ActividadController');

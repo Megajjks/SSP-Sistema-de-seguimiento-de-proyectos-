@@ -165,7 +165,7 @@
 	<script src="js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
 
 	<!-- Sweet Alert -->
-	<script src="js/plugin/sweetalert/sweetalert.min.js"></script>
+	<script src="js/sweetalert2.all.min.js"></script>
 
 <!-- Atlantis JS -->
 <script src="js/atlantis.min.js"></script>

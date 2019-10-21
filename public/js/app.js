@@ -50831,6 +50831,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -50839,15 +50870,126 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   data: function data() {
     return {
+      arrayActividades: [],
       modal: 0,
       tituloModal: "",
       tipoAccion: 0,
-      errorProyecto: 0,
-      errorMostrarMsjProyecto: []
+      errorActividad: 0,
+      errorMostrarMsjActividad: [],
+      titulo: "",
+      prioridad: "",
+      fec_exp: "",
+      hrs_exp: "",
+      descripcion: "",
+      id_actividad: 0,
+      id_proyecto: 0,
+      id_colaborador: 0
     };
   },
 
   methods: {
+    listarActividades: function listarActividades() {
+      var me = this;
+      axios.get("/lista-actividades").then(function (response) {
+        // handle success
+        me.arrayActividades = response.data;
+        //console.log(response);
+      }).catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
+    registrarActividad: function registrarActividad() {
+      if (this.validarProyecto()) {
+        return;
+      }
+
+      var metodo = this;
+      axios.post("/lista-actividades", {
+        titulo: this.titulo,
+        prioridad: this.prioridad,
+        fec_exp: this.fec_exp,
+        hrs_exp: this.hrs_exp,
+        descripcion: this.descripcion
+      }).then(function (response) {
+        metodo.cerrarModal();
+        metodo.listarActividades();
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    actualizarActividad: function actualizarActividad() {
+      if (this.validarProyecto()) {
+        return;
+      }
+
+      var metodo = this;
+      axios.put("/lista-actividades/${id_actividad}", {
+        titulo: this.titulo,
+        prioridad: this.prioridad,
+        fec_exp: this.fec_exp,
+        hrs_exp: this.hrs_exp,
+        descripcion: this.descripcion,
+        id_actividad: this.id_actividad,
+        id_proyecto: this.id_proyecto,
+        id_colaborador: this.id_colaborador
+      }).then(function (response) {
+        metodo.cerrarModal();
+        metodo.listarActividades();
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    eliminarActividad: function eliminarActividad(id) {
+      var _this = this;
+
+      var swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+      });
+
+      swalWithBootstrapButtons.fire({
+        title: "¿Estas seguro?",
+        text: "Al hacerlo esta actividad quedara eliminanda de por vida",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, ¡eliminarlo!",
+        cancelButtonText: "No, ¡cancelar!",
+        reverseButtons: true
+      }).then(function (result) {
+        if (result.value) {
+          console.log('ok' + id);
+          var metodo = _this;
+          axios.delete("/lista-actividades/${id}", {
+            //'id': id
+          }).then(function (response) {
+            metodo.listarActividades();
+            swalWithBootstrapButtons.fire("¡Eliminada!", "La actividad ha sido eliminado de forma correcta.", "success");
+          }).catch(function (error) {
+            console.log(error);
+          });
+        } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire("Cancelado", "La actividad esta segura", "error");
+        }
+      });
+    },
+    validarProyecto: function validarProyecto() {
+      this.errorActividad = 0;
+      this.errorMostrarMsjActividad = [];
+
+      if (!this.titulo) this.errorMostrarMsjActividad.push("El titulo de la actividad no puede estar vacio");
+      if (!this.prioridad) this.errorMostrarMsjActividad.push("La prioridad de la actividad no puede estar vacio");
+      if (!this.fec_exp) this.errorMostrarMsjActividad.push("La fecha de termino de la actividad no puede estar vacio");
+      if (!this.hrs_exp) this.errorMostrarMsjActividad.push("La hora de termino de la actividad no puede estar vacio");
+      if (!this.descripcion) this.errorMostrarMsjActividad.push("La descripcion de la actividad no puede estar vacio");
+      if (this.errorMostrarMsjActividad.length) this.errorActividad = 1;
+      return this.errorActividad;
+    },
     abrirModal: function abrirModal(modelo, accion) {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
 
@@ -50860,6 +51002,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                   this.modal = 1;
                   this.tituloModal = "Nueva Actividad";
                   this.tipoAccion = 1;
+                  this.titulo = "";
+                  this.prioridad = "";
+                  this.fec_exp = "";
+                  this.hrs_exp = "";
+                  this.descripcion = "";
                   break;
                 }
               case "editar":
@@ -50867,6 +51014,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                   this.modal = 1;
                   this.tituloModal = "Editar Actividad";
                   this.tipoAccion = 2;
+                  this.titulo = data["titulo"];
+                  this.prioridad = data["prioridad"];
+                  this.fec_exp = data["fec_exp"];
+                  this.hrs_exp = data["hrs_exp"];
+                  this.descripcion = data["descripcion"];
+                  this.id_actividad = data["id_actividad"];
+                  this.id_proyecto = data["id_proyecto"];
+                  this.id_colaborador = data["id_colaborador"];
+                  console.log(data);
                   break;
                 }
             }
@@ -50874,16 +51030,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           break;
       }
     },
-    registrarActividad: function registrarActividad() {
-      console.log("Registrar activiades");
-    },
     cerrarModal: function cerrarModal() {
       this.modal = 0;
       this.tituloModal = "";
     }
   },
   mounted: function mounted() {
-    console.log("Component mounted.");
+    this.listarActividades();
+    //console.log("Component mounted.");
   }
 });
 
@@ -51399,76 +51553,189 @@ var render = function() {
   return _c("div", { staticClass: "col-md-12" }, [
     _c("div", { staticClass: "col-md-12 row" }, [
       _c("div", { staticClass: "col-md-12 animated fadeIn" }, [
-        _c("div", { staticClass: "card card-round card-efecto" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "card-header d-flex justify-content-between align-items-center py-3 mx-0"
-            },
-            [
-              _c("h2", { staticClass: "card-title font-weight-bold h2" }, [
-                _vm._v("Lista de actividades")
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-success font-weight-bold btn-round",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      return _vm.abrirModal("actividad", "crear")
+        _c(
+          "div",
+          { staticClass: "card card-round card-efecto" },
+          [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "card-header d-flex justify-content-between align-items-center py-3 mx-0"
+              },
+              [
+                _c("h2", { staticClass: "card-title font-weight-bold h2" }, [
+                  _vm._v("Lista de actividades")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success font-weight-bold btn-round",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.abrirModal("actividad", "crear")
+                      }
                     }
-                  }
-                },
-                [_vm._m(0), _vm._v(" Nueva Actividad\n          ")]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "col-md-12 d-flex flex-column mb-2" }, [
-              _c(
+                  },
+                  [_vm._m(0), _vm._v(" Nueva Actividad\n          ")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _vm._l(_vm.arrayActividades, function(actividad) {
+              return _c(
                 "div",
                 {
-                  staticClass:
-                    "col-md-12 d-flex justify-content-between align-items-center px-0 py-0 my-0 mx-0"
+                  key: actividad.id_actividad,
+                  staticClass: "card-body px-0 py-0 my-0 mx-0"
                 },
                 [
-                  _vm._m(1),
-                  _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "col-md-6 d-flex justify-content-end" },
+                    {
+                      staticClass:
+                        "col-md-12 d-flex flex-column px-0 py-0 my-0 mx-0"
+                    },
                     [
                       _c(
-                        "span",
+                        "div",
                         {
-                          staticClass: "btn pl-0 pr-2 py-0 my-0",
-                          staticStyle: {
-                            "font-size": "1.5em",
-                            color: "Dodgerblue"
-                          },
-                          on: {
-                            click: function($event) {
-                              return _vm.abrirModal("actividad", "editar")
-                            }
-                          }
+                          staticClass:
+                            "col-md-12 d-flex justify-content-between align-items-center px-0 py-0 my-0 mx-0"
                         },
-                        [_c("i", { staticClass: "fas fa-edit" })]
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "col-md-6 d-flex justify-content-start"
+                            },
+                            [
+                              _c(
+                                "h2",
+                                {
+                                  domProps: {
+                                    textContent: _vm._s(actividad.titulo)
+                                  }
+                                },
+                                [_vm._m(1, true)]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "col-md-6 d-flex justify-content-end"
+                            },
+                            [
+                              _c(
+                                "span",
+                                {
+                                  staticClass: "btn pl-0 pr-2 py-0 my-0",
+                                  staticStyle: {
+                                    "font-size": "1.5em",
+                                    color: "Dodgerblue"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.abrirModal(
+                                        "actividad",
+                                        "editar",
+                                        actividad
+                                      )
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fas fa-edit" })]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                {
+                                  staticClass: "btn pl-0 pr-2 py-0 my-0",
+                                  staticStyle: {
+                                    "font-size": "1.5em",
+                                    color: "Tomato"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.eliminarActividad(
+                                        actividad.id_actividad
+                                      )
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fas fa-trash-alt" })]
+                              )
+                            ]
+                          )
+                        ]
                       ),
                       _vm._v(" "),
-                      _vm._m(2)
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex justify-content-between align-items-center px-0 py-0 my-0 mx-0"
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "col-md-6 d-flex justify-content-start"
+                            },
+                            [
+                              _c("p", {
+                                staticClass: "btn-danger btn-round btn-sm mr-1",
+                                domProps: {
+                                  textContent: _vm._s(actividad.prioridad)
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "p",
+                                {
+                                  staticClass:
+                                    "btn-default btn-round btn-sm mr-1"
+                                },
+                                [_vm._v("Para:Jayro Salazar")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "p",
+                                {
+                                  staticClass:
+                                    "btn-danger btn-round btn-sm mr-1"
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                  Expira:\n                  "
+                                  ),
+                                  _c("span", {
+                                    domProps: {
+                                      textContent: _vm._s(actividad.fec_exp)
+                                    }
+                                  })
+                                ]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _vm._m(2, true)
+                        ]
+                      )
                     ]
                   )
                 ]
-              ),
-              _vm._v(" "),
-              _vm._m(3)
-            ])
-          ])
-        ])
+              )
+            })
+          ],
+          2
+        )
       ])
     ]),
     _vm._v(" "),
@@ -51512,11 +51779,180 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("form", [
-                  _vm._m(4),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "label",
+                      { attrs: { for: "exampleFormControlInput1" } },
+                      [_vm._v("Nombre de la Actividad")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.titulo,
+                          expression: "titulo"
+                        }
+                      ],
+                      staticClass: "form-control input-solid",
+                      attrs: { type: "text", placeholder: "Mi proyecto nuevo" },
+                      domProps: { value: _vm.titulo },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.titulo = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
                   _vm._v(" "),
-                  _vm._m(5),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "d-flex justify-content-between align-items-center"
+                    },
+                    [
+                      _c("div", { staticClass: "form-group col-md-4" }, [
+                        _c(
+                          "label",
+                          { attrs: { for: "exampleFormControlSelect1" } },
+                          [_vm._v("Tipo de prioridad")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.prioridad,
+                                expression: "prioridad"
+                              }
+                            ],
+                            staticClass: "form-control input-solid",
+                            attrs: { id: "exampleFormControlSelect1" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.prioridad = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c("option", [_vm._v("Bajo")]),
+                            _vm._v(" "),
+                            _c("option", [_vm._v("Medio")]),
+                            _vm._v(" "),
+                            _c("option", [_vm._v("Alto")])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group col-md-4" }, [
+                        _c(
+                          "label",
+                          { attrs: { for: "exampleFormControlInput1" } },
+                          [_vm._v("Expira el:")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.fec_exp,
+                              expression: "fec_exp"
+                            }
+                          ],
+                          staticClass: "form-control input-solid",
+                          attrs: { type: "date" },
+                          domProps: { value: _vm.fec_exp },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.fec_exp = $event.target.value
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group col-md-4" }, [
+                        _c(
+                          "label",
+                          { attrs: { for: "exampleFormControlInput1" } },
+                          [_vm._v("A las:")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.hrs_exp,
+                              expression: "hrs_exp"
+                            }
+                          ],
+                          staticClass: "form-control input-solid",
+                          attrs: { type: "time" },
+                          domProps: { value: _vm.hrs_exp },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.hrs_exp = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]
+                  ),
                   _vm._v(" "),
-                  _vm._m(6),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "label",
+                      { attrs: { for: "exampleFormControlTextarea1" } },
+                      [_vm._v("Descripción")]
+                    ),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.descripcion,
+                          expression: "descripcion"
+                        }
+                      ],
+                      staticClass: "form-control input-solid",
+                      attrs: { rows: "5" },
+                      domProps: { value: _vm.descripcion },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.descripcion = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -51525,8 +51961,8 @@ var render = function() {
                         {
                           name: "show",
                           rawName: "v-show",
-                          value: _vm.errorProyecto,
-                          expression: "errorProyecto"
+                          value: _vm.errorActividad,
+                          expression: "errorActividad"
                         }
                       ],
                       staticClass: "form-group row div-error"
@@ -51535,7 +51971,36 @@ var render = function() {
                       _c(
                         "div",
                         { staticClass: "text-center text-error" },
-                        _vm._l(_vm.errorMostrarMsjProyecto, function(error) {
+                        _vm._l(_vm.errorMostrarMsjActividad, function(error) {
+                          return _c("div", {
+                            key: error,
+                            staticClass: "alert alert-danger",
+                            domProps: { textContent: _vm._s(error) }
+                          })
+                        }),
+                        0
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.errorActividad,
+                          expression: "errorActividad"
+                        }
+                      ],
+                      staticClass: "form-group row div-error"
+                    },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "text-center text-error" },
+                        _vm._l(_vm.errorMostrarMsjActividad, function(error) {
                           return _c("div", {
                             key: error,
                             staticClass: "alert alert-danger",
@@ -51571,7 +52036,12 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-success font-weight-bold",
-                        attrs: { type: "button" }
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.actualizarActividad()
+                          }
+                        }
                       },
                       [_vm._v("Actualizar actividad")]
                     )
@@ -51611,159 +52081,35 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6 d-flex justify-content-start" }, [
-      _c("h2", [
-        _c(
-          "span",
-          {
-            staticClass: "btn pl-0 pr-2 py-0 my-0",
-            staticStyle: { "font-size": "1em" }
-          },
-          [_c("i", { staticClass: "far fa-check-circle" })]
-        ),
-        _vm._v("Revisión de expendientes\n                ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c(
       "span",
       {
         staticClass: "btn pl-0 pr-2 py-0 my-0",
-        staticStyle: { "font-size": "1.5em", color: "Tomato" }
+        staticStyle: { "font-size": "1em" }
       },
-      [_c("i", { staticClass: "fas fa-trash-alt" })]
+      [_c("i", { staticClass: "far fa-check-circle" })]
     )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "d-flex justify-content-between align-items-center px-0 py-0 my-0 mx-0"
-      },
-      [
-        _c("div", { staticClass: "col-md-6 d-flex justify-content-start" }, [
-          _c("p", { staticClass: "btn-danger btn-round btn-sm mr-1" }, [
-            _vm._v("Alto")
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "btn-default btn-round btn-sm mr-1" }, [
-            _vm._v("Para:Jayro Salazar")
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "btn-danger btn-round btn-sm mr-1" }, [
-            _vm._v("Expira: 06/10/2019")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-6 d-flex justify-content-end" }, [
-          _c("p", { staticClass: "btn-warning btn-round btn-sm" }, [
-            _vm._v("En progreso")
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "btn-primary btn-border btn-round btn-sm" }, [
-            _vm._v("En evaluación")
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "btn-danger btn-border btn-round btn-sm" }, [
-            _vm._v("En corrección")
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "btn-success btn-border btn-round btn-sm" }, [
-            _vm._v("Aprovado")
-          ])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "exampleFormControlInput1" } }, [
-        _vm._v("Nombre de la Actividad")
+    return _c("div", { staticClass: "col-md-6 d-flex justify-content-end" }, [
+      _c("p", { staticClass: "btn-warning btn-round btn-sm" }, [
+        _vm._v("En progreso")
       ]),
       _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control input-solid",
-        attrs: { type: "text", placeholder: "Mi proyecto nuevo" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "d-flex justify-content-between align-items-center" },
-      [
-        _c("div", { staticClass: "form-group col-md-4" }, [
-          _c("label", { attrs: { for: "exampleFormControlSelect1" } }, [
-            _vm._v("Tipo de prioridad")
-          ]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              staticClass: "form-control input-solid",
-              attrs: { id: "exampleFormControlSelect1" }
-            },
-            [
-              _c("option", [_vm._v("Bajo")]),
-              _vm._v(" "),
-              _c("option", [_vm._v("Medio")]),
-              _vm._v(" "),
-              _c("option", [_vm._v("Alto")])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group col-md-4" }, [
-          _c("label", { attrs: { for: "exampleFormControlInput1" } }, [
-            _vm._v("Expira el:")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control input-solid",
-            attrs: { type: "date" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group col-md-4" }, [
-          _c("label", { attrs: { for: "exampleFormControlInput1" } }, [
-            _vm._v("A las:")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control input-solid",
-            attrs: { type: "time" }
-          })
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "exampleFormControlTextarea1" } }, [
-        _vm._v("Descripción")
+      _c("p", { staticClass: "btn-primary btn-border btn-round btn-sm" }, [
+        _vm._v("En evaluación")
       ]),
       _vm._v(" "),
-      _c("textarea", {
-        staticClass: "form-control input-solid",
-        attrs: { rows: "5" }
-      })
+      _c("p", { staticClass: "btn-danger btn-border btn-round btn-sm" }, [
+        _vm._v("En corrección")
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "btn-success btn-border btn-round btn-sm" }, [
+        _vm._v("Aprovado")
+      ])
     ])
   }
 ]

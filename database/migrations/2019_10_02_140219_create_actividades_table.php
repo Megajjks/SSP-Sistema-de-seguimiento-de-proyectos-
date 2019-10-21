@@ -13,7 +13,7 @@ class CreateActividadesTable extends Migration
      */
     public function up()
     {
-        Schema::create('actividades', function (Blueprint $table) {
+        Schema::create('actividads', function (Blueprint $table) {
             $table->increments('id_actividad');
             $table->unsignedInteger('id_proyecto');
             $table->unsignedInteger('id_colaborador');
@@ -37,6 +37,6 @@ class CreateActividadesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('actividades');
+        Schema::dropIfExists('actividads');
     }
 }

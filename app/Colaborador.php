@@ -13,7 +13,7 @@ class Colaborador extends Model
     //relaciones
     public function actividades()
     {
-        return $this->hasMany('App\Actividad');
+        return $this->belongsTo('App\Actividad');
     }
     public function proyecto()
     {

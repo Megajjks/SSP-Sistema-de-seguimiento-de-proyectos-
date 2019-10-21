@@ -86,7 +86,7 @@ class ProyectoController extends Controller
         $proyecto->nombre = $request->nombre;
         $proyecto->describcion = $request->describcion;
         $proyecto->estado_actual = $request->estado_actual;
-        $proyecto->ncolaboradores = $request->ncolaboradores;;
+        $proyecto->ncolaboradores = $request->ncolaboradores;
         $proyecto->fec_ini = $request->fec_ini;
         $proyecto->save();
     }
