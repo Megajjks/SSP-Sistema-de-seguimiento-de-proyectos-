@@ -107,4 +107,10 @@ class ActividadController extends Controller
         $actividad->delete();
         return response()->json('successfully deleted');
     }
+    public function delete($id)
+    {
+        $actividad = \App\Actividad::find($id);
+        $actividad->delete();
+        return response()->json(null,204);
+    }
 }

@@ -231,6 +231,7 @@ export default {
       }
 
       let metodo = this;
+      let url = "/lista-actividades/${id_actividad}";
       axios
         .put("/lista-actividades/${id_actividad}", {
           titulo: this.titulo,
@@ -251,6 +252,7 @@ export default {
         });
     },
     eliminarActividad(id) {
+      console.log(id);
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
           confirmButton: "btn btn-success",
@@ -272,9 +274,11 @@ export default {
         .then(result => {
           if (result.value) {
             console.log('ok' + id)
+            console.log(url)
             let metodo = this;
+            let url = "/deleteactividad/" + id;
             axios
-              .delete("/lista-actividades/${id}", {
+              .delete(url, {
                 //'id': id
               })
               .then(function(response) {
