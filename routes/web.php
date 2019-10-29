@@ -27,9 +27,8 @@ Route::get('/actividad1', function () {
 });
 
 Route::resource('/proyecto','ProyectoController');
-//Route::get('/proyecto','ProyectoController@index');
-//Route::post('/proyecto/registrar','ProyectoController@store');
-//Route::put('/proyecto/actualizar','ProyectoController@update');
+Route::post('/proyecto/actualizar','ProyectoController@update');
+Route::delete('/deleteproyecto/{id}','ProyectoController@delete');
 
 Route::resource('/lista-actividades','ActividadController');
 Route::delete('/deleteactividad/{id}','ActividadController@delete');
