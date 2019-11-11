@@ -22,8 +22,8 @@ Route::get('/home', function () {
 });
 
 Route::get('/actividad1', function () {
-    //return view('template/contenido');
-    return view('template/vproyecto');
+    return view('template/contenido');
+    //return view('template/vproyecto');
 });
 
 Route::resource('/proyecto','ProyectoController');
@@ -32,3 +32,8 @@ Route::delete('/deleteproyecto/{id}','ProyectoController@delete');
 
 Route::resource('/lista-actividades','ActividadController');
 Route::delete('/deleteactividad/{id}','ActividadController@delete');
+
+//emails routes
+Route::post('/email1','Email1Controller@email')->name('email1.email');
+//Route::post('/contactar', 'Email1Controller@contact')->name('contact');
+Route::post('/contactar', 'Email1Controller@contact');
