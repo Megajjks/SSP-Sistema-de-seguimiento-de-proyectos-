@@ -22,8 +22,8 @@ Route::get('/home', function () {
 });
 
 Route::get('/actividad1', function () {
-    return view('template/contenido');
-    //return view('template/vproyecto');
+    //return view('template/contenido');
+    return view('template/vproyecto');
 });
 
 Route::resource('/proyecto','ProyectoController');

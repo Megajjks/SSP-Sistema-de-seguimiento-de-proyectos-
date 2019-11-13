@@ -25,12 +25,15 @@
               <div
                 class="col-md-12 d-flex justify-content-between align-items-center px-0 py-0 my-0 mx-0"
               >
-                <div class="col-md-6 d-flex justify-content-start">
-                  <h2 v-text="actividad.titulo">
-                    <span class="btn pl-0 pr-2 py-0 my-0" style="font-size: 1em">
-                      <i class="far fa-check-circle"></i>
-                    </span>
-                  </h2>
+                <div class="col-md-6 d-flex justify-content-start align-items-center">
+                  <span class="btn pl-0 pr-2 py-0 my-0 " style="font-size: 1em" v-if="actividad.estado=='en progreso'">
+                    <i class="far fa-check-circle fa-2x"></i>
+                  </span>
+                  <span class="pl-0 pr-2 py-0 my-0 " style="font-size: 1em; color:gray;" v-else>
+                    <i class="fas fa-check-circle fa-2x"></i>
+                  </span>
+                  <del v-if="actividad.estado=='aprovado'"><h2 v-text="actividad.titulo"></h2></del>
+                  <h2 v-text="actividad.titulo" v-else></h2> 
                 </div>
                 <div class="col-md-6 d-flex justify-content-end">
                   <span
@@ -51,18 +54,38 @@
               </div>
               <div class="d-flex justify-content-between align-items-center px-0 py-0 my-0 mx-0">
                 <div class="col-md-6 d-flex justify-content-start">
-                  <p class="btn-danger btn-round btn-sm mr-1" v-text="actividad.prioridad"></p>
+                  <p class="btn-primary btn-round btn-sm mr-1" v-text="actividad.prioridad" v-if="actividad.prioridad=='Bajo'"></p>
+                  <p class="btn-warning btn-round btn-sm mr-1" v-text="actividad.prioridad" v-if="actividad.prioridad=='Medio'"></p>
+                  <p class="btn-danger btn-round btn-sm mr-1" v-text="actividad.prioridad" v-if="actividad.prioridad=='Alto'"></p>
                   <p class="btn-default btn-round btn-sm mr-1">Para:Jayro Salazar</p>
                   <p class="btn-danger btn-round btn-sm mr-1">
                     Expira:
                     <span v-text="actividad.fec_exp"></span>
                   </p>
                 </div>
-                <div class="col-md-6 d-flex justify-content-end">
+                <div class="col-md-6 d-flex justify-content-end" v-if="actividad.estado=='en progreso'">
                   <p class="btn-warning btn-round btn-sm">En progreso</p>
                   <p class="btn-primary btn-border btn-round btn-sm">En evaluación</p>
                   <p class="btn-danger btn-border btn-round btn-sm">En corrección</p>
                   <p class="btn-success btn-border btn-round btn-sm">Aprovado</p>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end" v-if="actividad.estado=='en evaluacion'">
+                  <p class="btn-warning btn-border btn-round btn-sm">En progreso</p>
+                  <p class="btn-primary btn-round btn-round btn-sm">En evaluación</p>
+                  <p class="btn-danger btn-border btn-round btn-sm">En corrección</p>
+                  <p class="btn-success btn-border btn-round btn-sm">Aprovado</p>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end" v-if="actividad.estado=='en correccion'">
+                  <p class="btn-warning btn-border btn-round btn-sm">En progreso</p>
+                  <p class="btn-primary btn-border btn-round btn-sm">En evaluación</p>
+                  <p class="btn-danger btn-round btn-round btn-sm">En corrección</p>
+                  <p class="btn-success btn-border btn-round btn-sm">Aprovado</p>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end" v-if="actividad.estado=='aprovado'">
+                  <p class="btn-warning btn-border btn-round btn-sm">En progreso</p>
+                  <p class="btn-primary btn-border btn-round btn-sm">En evaluación</p>
+                  <p class="btn-danger btn-border btn-round btn-sm">En corrección</p>
+                  <p class="btn-success btn-round btn-round btn-sm">Aprovado</p>
                 </div>
               </div>
             </div>
@@ -185,7 +208,8 @@ export default {
       descripcion: "",
       id_actividad: 0,
       id_proyecto: 0,
-      id_colaborador: 0
+      id_colaborador: 0,
+      estado:""
     };
   },
   methods: {
