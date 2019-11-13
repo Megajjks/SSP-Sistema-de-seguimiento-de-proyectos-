@@ -57,8 +57,8 @@ class ProyectoController extends Controller
      */
     public function show($id)
     {
-        //$proyecto = Proyecto::find($id);
-        //return response()->json($proyecto);
+        $proyecto = Proyecto::find($id);
+        return $proyecto;
     }
 
     /**
@@ -86,6 +86,7 @@ class ProyectoController extends Controller
         $proyecto->nombre = $request->nombre;
         $proyecto->describcion = $request->describcion;
         $proyecto->estado_actual = $request->estado_actual;
+        $proyecto->estatus = $request->estatus;
         $proyecto->ncolaboradores = $request->ncolaboradores;
         $proyecto->fec_ini = $request->fec_ini;
         $proyecto->save();
@@ -100,5 +101,11 @@ class ProyectoController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function delete($id)
+    {
+        $proyecto = \App\Proyecto::find($id);
+        $proyecto->delete();
+        return response()->json(null,204);
     }
 }

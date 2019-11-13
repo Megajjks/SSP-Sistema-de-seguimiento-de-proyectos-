@@ -18,19 +18,33 @@
         v-for="proyecto in arrayProyecto"
         :key="proyecto.id_proyecto"
       >
-
-          <div class="card card-round card-efecto" @click="mostrarproyecto(proyecto)">
-            <div class="card-header d-flex justify-content-between align-items-center">
-              <h2 class="card-title" v-text="proyecto.nombre"></h2>
-              <span class="btn btn-lg" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                <i class="fas fa-ellipsis-v"></i>
-              </span>
-              <div class="collapse" id="collapseExample">
-                  <a class="dropdown-item" href="#"><span><i class="fas fa-edit"></i></span>Editar</a>
-                  <a class="dropdown-item" href="#"><span><i class="fas fa-trash-alt"></i></span>Eliminar</a>
-              </div>
+        <div class="card card-round card-efecto" @click="mostrarproyecto(proyecto)">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h2 class="card-title" v-text="proyecto.nombre"></h2>
+            <span
+              class="btn btn-lg"
+              data-toggle="collapse"
+              href="#collapseExample"
+              role="button"
+              aria-expanded="false"
+              aria-controls="collapseExample"
+            >
+              <i class="fas fa-ellipsis-v"></i>
+            </span>
+            <div class="collapse" id="collapseExample">
+              <a class="dropdown-item" href="#" @click="abrirModal('categoria','actualizar',proyecto)">
+                <span>
+                  <i class="fas fa-edit"></i>
+                </span>Editar
+              </a>
+              <a class="dropdown-item" href="#" @click="eliminarProyecto(proyecto.id_proyecto)">
+                <span>
+                  <i class="fas fa-trash-alt"></i>
+                </span>Eliminar
+              </a>
             </div>
-            <a href="http://localhost:8000/actividad1">
+          </div>
+          <a href="http://localhost:8000/actividad1">
             <div class="card-body">
               <div class="row d-flex justify-content-between">
                 <div
@@ -75,8 +89,8 @@
                 </div>
               </div>
             </div>
-            </a>
-          </div>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -91,6 +105,7 @@
             </button>
           </div>
           <div class="modal-body">
+            <template v-if="tipoAccion==1 || tipoAccion==2">
             <form>
               <div class="form-group">
                 <label for="exampleFormControlInput1">Nombre del proyecto</label>
@@ -116,6 +131,7 @@
                 </div>
               </div>
             </form>
+            </template>
           </div>
           <div class="modal-footer">
             <button
@@ -127,6 +143,7 @@
             <button
               type="button"
               v-if="tipoAccion==2"
+              @click="actualizarProyecto()"
               class="btn btn-success font-weight-bold"
             >Actualizar proyecto</button>
             <button
@@ -145,10 +162,12 @@
 export default {
   data() {
     return {
+      id_proyecto:"",
       nombre: "",
       describcion: "",
       estatus: 0,
-      estatus_actual: "",
+      estado_actual: "",
+      ncolaboradores: "",
       fec_ini: "",
       fec_fin: "",
       tareascheck: "0",
@@ -194,6 +213,33 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
+      this.sendEmailUser();
+    },
+
+    actualizarProyecto() {
+      //validación de datos previos
+      if (this.validarProyecto()) {
+        return;
+      }
+
+      let metodo = this;
+      axios
+        .post("/proyecto/actualizar", {
+          id_proyecto : this.id_proyecto,
+          nombre: this.nombre,
+          describcion: this.describcion,
+          estatus: this.estatus,
+          estado_actual: this.estado_actual,
+          ncolaboradores: this.ncolaboradores,
+          fec_ini: this.fec_ini
+        })
+        .then(function(response) {
+          metodo.cerrarModal();
+          metodo.listarproyecto();
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     },
 
     validarProyecto() {
@@ -211,6 +257,7 @@ export default {
       if (this.errorMostrarMsjProyecto.length) this.errorProyecto = 1;
       return this.errorProyecto;
     },
+    
 
     cerrarModal() {
       this.modal = 0;
@@ -218,7 +265,7 @@ export default {
       this.nombre = "";
       this.describcion = "";
       this.estatus = 0;
-      this.estatus_actual = "";
+      this.estado_actual = "";
       this.fec_ini = "";
       this.fec_fin = "";
     },
@@ -234,19 +281,100 @@ export default {
                 this.nombre = "";
                 this.describcion = "";
                 this.estatus = 0;
-                this.estatus_actual = "";
+                this.estado_actual = "";
                 this.fec_ini = "";
                 this.fec_fin = "";
                 this.tipoAccion = 1;
                 break;
               }
+              case "actualizar": {
+                this.modal = 1;
+                this.tituloModal = "Actualizar Datos del Proyecto";
+                this.nombre = data['nombre'];
+                this.describcion = data['describcion'];
+                this.estado_actual = data['estado_actual'];
+                this.estatus = data['estatus'];
+                this.fec_ini = data['fec_ini'];
+                this.tipoAccion = 2;
+                this.id_proyecto = data['id_proyecto'];
+                break;
+              }
             }
+            
           }
           break;
       }
     },
+    eliminarProyecto(id) {
+      console.log(id);
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+      });
+
+      swalWithBootstrapButtons
+        .fire({
+          title: "¿Estas seguro?",
+          text: "Al hacerlo este proyecto quedara eliminanda de por vida",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Si, ¡eliminarlo!",
+          cancelButtonText: "No, ¡cancelar!",
+          reverseButtons: true
+        })
+        .then(result => {
+          if (result.value) {
+            console.log('ok' + id)
+            let metodo = this;
+            let url = "/deleteproyecto/" + id;
+            console.log(url)
+            axios
+              .delete(url, {
+                
+              })
+              .then(function(response) {
+                metodo.listarproyecto();
+                swalWithBootstrapButtons.fire(
+                  "¡Eliminada!",
+                  "El proyecto ha sido eliminado de forma correcta.",
+                  "success"
+                );
+              })
+              .catch(function(error) {
+                console.log(error);
+              });
+
+          } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+            swalWithBootstrapButtons.fire(
+              "Cancelado",
+              "El proyecto esta segura",
+              "error"
+            );
+          }
+        });
+    },
     mostrarproyecto(data = []) {
       console.log(data);
+    },
+    //conexiones con el api de outlook
+    sendEmailUser() {
+      console.log("Entre a sendEmail");
+      axios
+        .post("/contactar", {
+          
+        })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   },
   mounted() {
