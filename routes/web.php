@@ -26,6 +26,16 @@ Route::get('/actividad1', function () {
     return view('template/vproyecto');
 });
 
+Route::get('/colaborador', function () {
+    //return view('template/contenido');
+    return view('colaborador/menu-colaborador');
+});
+
+Route::get('/lider-p', function () {
+    //return view('template/contenido');
+    return view('liderproyecto/menu-liderproyecto');
+});
+
 Route::resource('/proyecto','ProyectoController');
 Route::post('/proyecto/actualizar','ProyectoController@update');
 Route::delete('/deleteproyecto/{id}','ProyectoController@delete');
