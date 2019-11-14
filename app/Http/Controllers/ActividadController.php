@@ -87,6 +87,7 @@ class ActividadController extends Controller
         $actividad->titulo = $request->titulo;
         $actividad->descripcion = $request->descripcion;
         $actividad->prioridad = $request->prioridad;
+        $actividad->estado = $request->estado;
         $actividad->fec_exp = $request->fec_exp;
         $actividad->hrs_exp = $request->hrs_exp;
         //llaves foraneas
