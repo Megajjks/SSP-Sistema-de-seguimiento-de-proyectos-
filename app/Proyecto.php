@@ -19,4 +19,9 @@ class Proyecto extends Model
     {
         return $this->hasMany('App\Colaborador');
     }
+    public function users()
+    {
+        return $this->belongToMany('App\Proyecto');
+    }
+
 }
