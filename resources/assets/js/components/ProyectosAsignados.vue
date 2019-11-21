@@ -15,12 +15,12 @@
    <div class="col-md-12 row">
       <div
         class="col-md-5 animated fadeIn"
-        v-for="proyecto in arrayColaborador"
-        :key="proyecto.id_proyecto"
+        v-for="proyectocompartido in arrayProyectoCompartido"
+        :key="proyectocompartido.id_proyecto"
       >
-        <div class="card card-round card-efecto" @click="mostrarproyecto(proyecto)">
+        <div class="card card-round card-efecto" @click="mostrarproyecto(proyectocompartido)">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <h2 class="card-title" v-text="proyecto.nombre"></h2>
+            <h2 class="card-title" v-text="proyectocompartido.nombre"></h2>
             <span
               class="btn btn-lg"
               data-toggle="collapse"
@@ -32,12 +32,12 @@
               <i class="fas fa-ellipsis-v"></i>
             </span>
             <div class="collapse" id="collapseExample">
-              <a class="dropdown-item" href="#" @click="abrirModal('categoria','actualizar',proyecto)">
+              <a class="dropdown-item" href="#" @click="abrirModal('categoria','actualizar',proyectocompartido)">
                 <span>
                   <i class="fas fa-edit"></i>
                 </span>Editar
               </a>
-              <a class="dropdown-item" href="#" @click="eliminarProyectoCompartido(proyecto.id_proyecto)">
+              <a class="dropdown-item" href="#" @click="eliminarProyectoCompartido(proyectocompartido.id_proyecto)">
                 <span>
                   <i class="fas fa-trash-alt"></i>
                 </span>Eliminar
@@ -65,13 +65,13 @@
                 <div
                   class="col-md-7 card-dark bg-primary-gradient card-round text-center blockquote"
                 >
-                  <p class="h4 mx-auto" v-text="proyecto.estatus"></p>
+                  <p class="h4 mx-auto" v-text="proyectocompartido.estatus"></p>
                 </div>
               </div>
               <div class="progress-card">
                 <div class="progress-status">
                   <span class="text-muted">Avance del proyecto</span>
-                  <span class="text-muted fw-bold" v-text="proyecto.estado_actual">%</span>
+                  <span class="text-muted fw-bold" v-text="proyectocompartido.estado_actual">%</span>
                 </div>
                 <div class="progress" style="height: 10xpx;">
                   <div
@@ -104,7 +104,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <template v-if="tipoAccion==1 || tipoAccion==2 || tipoAccion==3">
+            <template v-if="tipoAccion==1 || tipoAccion==2">
             <form>
               <div class="form-group">
                 <label for="exampleFormControlInput1">Nombre del proyecto</label>
@@ -118,37 +118,6 @@
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Descripción</label>
                 <textarea class="form-control input-solid" v-model="describcion" rows="5"></textarea>
-              </div>
-              <div v-show="errorProyectoCompartido" class="form-group row div-error">
-                <div class="text-center text-error">
-                  <div
-                    v-for="error in errorMostrarMsjProyectoCompartido"
-                    :key="error"
-                    v-text="error"
-                    class="alert alert-danger"
-                  ></div>
-                </div>
-              </div>
-            </form>
-            <!--modal 2-->
-            <form>
-               <div class="form-group">
-                <label for="exampleFormControlInput1">Nombre del Colaborador</label>
-                <input
-                  type="text"
-                  v-model="name"
-                  class="form-control input-solid"
-                  placeholder="Nuevo Colaborador"
-                />
-              </div>
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Email</label>
-                <input
-                  type="text"
-                  v-model="email"
-                  class="form-control input-solid"
-                  placeholder="Nuevo email"
-                />
               </div>
               <div v-show="errorProyectoCompartido" class="form-group row div-error">
                 <div class="text-center text-error">
@@ -178,12 +147,6 @@
             >Actualizar proyecto</button>
             <button
               type="button"
-              v-if="tipoAccion==3"
-              @click="registrarColaborador()"
-              class="btn btn-success font-weight-bold"
-            >registrar Colaborador</button>
-            <button
-              type="button"
               @click="cerrarModal()"
               class="btn btn-danger font-weight-bold"
             >Cancelar</button>
@@ -198,13 +161,7 @@
 export default {
   data() {
     return {
-      id_colaborador:"",
       id_proyecto:"",
-      id_usuario:"",
-      
-      name:"",
-      email:"",
-      password:"",
       nombre: "",
       describcion: "",
       estatus: 0,
@@ -214,7 +171,7 @@ export default {
       fec_fin: "",
       tareascheck: "0",
       tareasnocheck: "0",
-      arrayColaborador: [],
+      arrayProyectoCompartido: [],
       modal: 0,
       tituloModal: "",
       tipoAccion: 0,
@@ -226,10 +183,10 @@ export default {
     listarProyectoCompartido() {
       let me = this;
       axios
-        .get("/colaborador")
+        .get("/proyectoCompartido")
         .then(function(response) {
           // handle success
-          me.arrayColaborador = response.data;
+          me.arrayProyectoCompartido = response.data;
         })
         .catch(function(error) {
           // handle error
@@ -244,15 +201,10 @@ export default {
 
       let metodo = this;
       axios
-        .post("/colaborador", {
-          id_colaborador: this.id_colaborador,
-          nombre: this.nombre,
-          describcion: this.describcion,
+        .post("/proyectoCompartido", {
           id_proyecto: this.id_proyecto,
-          id_usuario: this.id_usuario,
-          name: this.name,
-          email: this.email,
-          password: this.password
+          nombre: this.nombre,
+          describcion: this.describcion
         })
         .then(function(response) {
           metodo.cerrarModal();
@@ -263,15 +215,15 @@ export default {
         });
      
     },
-     registrarColaborador() {
-      //validación de datos previos
+     /*registrarColaborador() {
+      validación de datos previos
       if (this.validarProyectoCompartido()) {
         return;
       }
 
       let metodo = this;
       axios
-        .post("/colaborador/actualizar", {
+        .post("/proyectoCompartido/actualizar", {
           id_colaborador: this.id_colaborador,
           id_usuario: this.id_usuario,
           name: this.name,
@@ -285,7 +237,7 @@ export default {
           console.log(error);
         });
       this.sendEmailUser();
-    },
+    }, */
 
     actualizarProyectoCompartido() {
       //validación de datos previos
@@ -295,19 +247,14 @@ export default {
 
       let metodo = this;
       axios
-        .post("/colaborador/actualizar", {
-          id_colaborador: this.id_colaborador,
-          id_proyecto : this.id_proyecto,
-          id_usuario: this.id_usuario,
+        .post("/proyectoCompartido/actualizar", {
+          id_proyecto: this.id_proyecto,
           nombre: this.nombre,
           describcion: this.describcion,
           estatus: this.estatus,
           estado_actual: this.estado_actual,
           ncolaboradores: this.ncolaboradores,
-          fec_ini: this.fec_ini,
-          name: this.name,
-          email: this.email,
-          password: this.password
+          fec_ini: this.fec_ini
         })
         .then(function(response) {
           metodo.cerrarModal();
@@ -345,11 +292,7 @@ export default {
       this.estado_actual = "";
       this.fec_ini = "";
       this.fec_fin = "";
-      this.id_proyecto = "";
-      this.id_usuario = "";
-      this.name = "";
-      this.email = "";
-      this.password = "";
+      this.id_proyecto = ""
     },
 
     abrirModal(modelo, accion, data = []) {
@@ -367,11 +310,7 @@ export default {
                 this.fec_ini = "";
                 this.fec_fin = "";
                 this.tipoAccion = 1;
-                this.id_proyecto = "";
-                this.id_usuario = "";
-                this.name = "";
-                this.email = "";
-                this.password = "";
+                this.id_proyecto = ""
                 break;
               }
               case "actualizar": {
@@ -383,25 +322,10 @@ export default {
                 this.estatus = data['estatus'];
                 this.fec_ini = data['fec_ini'];
                 this.tipoAccion = 2;
-                this.id_colaborador = data['id_colaboraor'];
-                this.id_proyecto = data['id_proyecto'];
-                this.id_usuario = data['id_usuario'];
-                this.name = data['name'];
-                this.email = data['email'];
-                this.password = data['password'];
+                this.id_proyecto = data['id_proyecto']
                 break;
               }
-              case "colaborador": {
-               this.modal = 1;
-                this.tituloModal = "Agregar colaborador";
-                this.tipoAccion = 3;
-                this.id_proyecto = "";
-                this.id_usuario = "";
-                this.name = "";
-                this.email = "";
-                this.password = "";
-                break;
-              }
+              
             }
             
           }
@@ -432,7 +356,7 @@ export default {
           if (result.value) {
             console.log('ok' + id)
             let metodo = this;
-            let url = "/deletecolaborador/" + id;
+            let url = "/deleteproyectoCompartido/" + id;
             console.log(url)
             axios
               .delete(url, {

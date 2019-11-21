@@ -17,7 +17,7 @@ class Colaborador extends Model
     }
     public function proyectos()
     {
-        return $this->belongsTo('App\Proyecto');
+        return $this->belongsTo('App\ProyectoCompartido');
     }
     public function users()
     {

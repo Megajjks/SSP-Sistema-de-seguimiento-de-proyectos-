@@ -38,23 +38,13 @@ class ColaboradorController extends Controller
      */
     public function store(Request $request)
     {
-        $colaboradores1 = Proyecto::create($request->all());
+        $colaboradores1 = ProyectoCompartido::create($request->all());
         $colaboradores2 = Users::create($request->all());
         $colaboradores1->proyectos()->attach($colaboradores2->id); 
         //o puedes hacerlo al revés: $modelo2->relacionados()->attach($modelo1->id);
-        $fechahoy = Carbon::now(); //obtener las fechas actuales
-        $colaboradores = new Colaboradores();
-        $colaboradores->nombre = $request->nombre;
-        $colaboradores->describcion = $request->describcion;
-        $colaboradores->estado_actual = 0;
-        $colaboradores->ncolaboradores = 1;
-        //$proyecto->estatus = "Asignación";
+       
         $colaboradores->id_proyecto = $request->id_proyecto;
-        $colaboradores->id_usuario = $request->id_usuario;
-        $colaboradores->name = $request->name;
-        $colaboradores->email = $request->email;
-        $colaboradores->password =  $request->password;
-        $colaboradores->fec_ini = $fechahoy->format('Y-m-d');
+        $colaboradores->id_usuario = $request->id_usuario
         $colaboradores->save();
 
 
@@ -95,16 +85,7 @@ class ColaboradorController extends Controller
     {
         $colaboradores = Colaboradores::findOrFail($request->id_colaborador);
         $colaboradores->id_proyecto = $request->id_proyecto;
-        $colaboradores->id_usuario = $request->id_usuario;
-        $colaboradores->nombre = $request->nombre;
-        $colaboradores->describcion = $request->describcion;
-        $colaboradores->estado_actual = $request->estado_actual;
-        $colaboradores->estatus = $request->estatus;
-        $colaboradores->ncolaboradores = $request->ncolaboradores;
-        $colaboradores->fec_ini = $request->fec_ini;
-        $colaboradores->name = $request->name;
-        $colaboradores->email = $request->email;
-        $colaboradores->password =  $request->password;
+        $colaboradores->id_usuario = $request->id_usuario
         $colaboradores->save();
     }
 

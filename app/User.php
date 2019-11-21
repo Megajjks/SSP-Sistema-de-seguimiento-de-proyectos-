@@ -33,7 +33,7 @@ class User extends Authenticatable
     }
     public function proyectos()
     {
-        return $this->belongsToMany('App\Proyecto'); 
+        return $this->belongsToMany('App\ProyectoCompartido'); 
         //proyecto-usuario (pryecto_id, user_id)
     } 
 }

@@ -49250,10 +49250,389 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      id_proyecto: "",
+      nombre: "",
+      describcion: "",
+      estatus: 0,
+      estado_actual: "",
+      ncolaboradores: "",
+      fec_ini: "",
+      fec_fin: "",
+      tareascheck: "0",
+      tareasnocheck: "0",
+      arrayProyectoCompartido: [],
+      modal: 0,
+      tituloModal: "",
+      tipoAccion: 0,
+      errorProyectoCompartido: 0,
+      errorMostrarMsjProyectoCompartido: []
+    };
+  },
+
+  methods: {
+    listarProyectoCompartido: function listarProyectoCompartido() {
+      var me = this;
+      axios.get("/proyectoCompartido").then(function (response) {
+        // handle success
+        me.arrayProyectoCompartido = response.data;
+      }).catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
+    registrarProyectoCompartido: function registrarProyectoCompartido() {
+      //validación de datos previos
+      if (this.validarProyectoCompartido()) {
+        return;
+      }
+
+      var metodo = this;
+      axios.post("/proyectoCompartido", {
+        id_proyecto: this.id_proyecto,
+        nombre: this.nombre,
+        describcion: this.describcion
+      }).then(function (response) {
+        metodo.cerrarModal();
+        metodo.listarProyectoCompartido();
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+
+    /*registrarColaborador() {
+     validación de datos previos
+     if (this.validarProyectoCompartido()) {
+       return;
+     }
+       let metodo = this;
+     axios
+       .post("/proyectoCompartido/actualizar", {
+         id_colaborador: this.id_colaborador,
+         id_usuario: this.id_usuario,
+         name: this.name,
+         email: this.email,
+        })
+       .then(function(response) {
+         metodo.cerrarModal();
+         metodo.listarProyectoCompartido();
+       })
+       .catch(function(error) {
+         console.log(error);
+       });
+     this.sendEmailUser();
+    }, */
+
+    actualizarProyectoCompartido: function actualizarProyectoCompartido() {
+      //validación de datos previos
+      if (this.validarProyectoCompartido()) {
+        return;
+      }
+
+      var metodo = this;
+      axios.post("/proyectoCompartido/actualizar", {
+        id_proyecto: this.id_proyecto,
+        nombre: this.nombre,
+        describcion: this.describcion,
+        estatus: this.estatus,
+        estado_actual: this.estado_actual,
+        ncolaboradores: this.ncolaboradores,
+        fec_ini: this.fec_ini
+      }).then(function (response) {
+        metodo.cerrarModal();
+        metodo.listarProyectoCompartido();
+      }).catch(function (error) {
+        console.log(error);
+      });
+      this.sendEmailUser();
+    },
+    validarProyectoCompartido: function validarProyectoCompartido() {
+      this.errorProyectoCompartido = 0;
+      this.errorMostrarMsjProyectoCompartido = [];
+
+      if (!this.nombre) this.errorMostrarMsjProyectoCompartido.push("El nombre del proyecto no puede estar vacio");
+      if (!this.describcion) this.errorMostrarMsjProyectoCompartido.push("La descripción del proyecto no puede estar vacio");
+      if (this.errorMostrarMsjProyectoCompartido.length) this.errorProyectoCompartido = 1;
+      return this.errorProyectoCompartido;
+    },
+    cerrarModal: function cerrarModal() {
+      this.modal = 0;
+      this.tituloModal = "";
+      this.nombre = "";
+      this.describcion = "";
+      this.estatus = 0;
+      this.estado_actual = "";
+      this.fec_ini = "";
+      this.fec_fin = "";
+      this.id_proyecto = "";
+    },
+    abrirModal: function abrirModal(modelo, accion) {
+      var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+
+      switch (modelo) {
+        case "categoria":
+          {
+            switch (accion) {
+              case "registrar":
+                {
+                  this.modal = 1;
+                  this.tituloModal = "¿Qué construiras hoy?";
+                  this.nombre = "";
+                  this.describcion = "";
+                  this.estatus = 0;
+                  this.estado_actual = "";
+                  this.fec_ini = "";
+                  this.fec_fin = "";
+                  this.tipoAccion = 1;
+                  this.id_proyecto = "";
+                  break;
+                }
+              case "actualizar":
+                {
+                  this.modal = 1;
+                  this.tituloModal = "Actualizar Datos del Proyecto";
+                  this.nombre = data['nombre'];
+                  this.describcion = data['describcion'];
+                  this.estado_actual = data['estado_actual'];
+                  this.estatus = data['estatus'];
+                  this.fec_ini = data['fec_ini'];
+                  this.tipoAccion = 2;
+                  this.id_proyecto = data['id_proyecto'];
+                  break;
+                }
+
+            }
+          }
+          break;
+      }
+    },
+    eliminarProyectoCompartido: function eliminarProyectoCompartido(id) {
+      var _this = this;
+
+      console.log(id);
+      var swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+      });
+
+      swalWithBootstrapButtons.fire({
+        title: "¿Estas seguro?",
+        text: "Al hacerlo este proyecto quedara eliminanda de por vida",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, ¡eliminarlo!",
+        cancelButtonText: "No, ¡cancelar!",
+        reverseButtons: true
+      }).then(function (result) {
+        if (result.value) {
+          console.log('ok' + id);
+          var metodo = _this;
+          var url = "/deleteproyectoCompartido/" + id;
+          console.log(url);
+          axios.delete(url, {}).then(function (response) {
+            metodo.listarproyecto();
+            swalWithBootstrapButtons.fire("¡Eliminada!", "El proyecto ha sido eliminado de forma correcta.", "success");
+          }).catch(function (error) {
+            console.log(error);
+          });
+        } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire("Cancelado", "El proyecto esta segura", "error");
+        }
+      });
+    },
+    MostrarProyectoCompartido: function MostrarProyectoCompartido() {
+      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+      console.log(data);
+    },
+
+    //conexiones con el api de outlook
+    sendEmailUser: function sendEmailUser() {
+      console.log("Entre a sendEmail");
+      axios.post("https://outlook.office.com/api/v2.0/me/sendmail", {
+        Message: {
+          Subject: "¡Nuevo proyecto!",
+          Body: {
+            ContentType: "Text",
+            Content: "Te han agregado a un nuevo proyecto."
+          },
+          ToRecipients: [{
+            EmailAddress: {
+              Address: "5871@itescam.edu.mx"
+            }
+          }],
+          Attachments: [{
+            "@odata.type": "#Microsoft.OutlookServices.FileAttachment",
+            Name: "menu.txt",
+            ContentBytes: "bWFjIGFuZCBjaGVlc2UgdG9kYXk="
+          }]
+        },
+        SaveToSentItems: "false"
+      }).then(function (response) {
+        console.log(response);
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  },
   mounted: function mounted() {
-    console.log("Component mounted.");
+    this.listarProyectoCompartido();
   }
 });
 
@@ -49265,26 +49644,472 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "col-md-12" }, [
+    _c(
+      "div",
+      { staticClass: "col-md-12 d-flex justify-content-between py-4 mx-0" },
+      [
+        _c("h1", [_vm._v("Proyectos asignados")]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-success font-weight-bold",
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                return _vm.abrirModal("categoria", "registrar")
+              }
+            }
+          },
+          [_vm._m(0), _vm._v(" Agregar Proyecto\n    ")]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "col-md-12 row" },
+      _vm._l(_vm.arrayProyectoCompartido, function(proyectocompartido) {
+        return _c(
+          "div",
+          {
+            key: proyectocompartido.id_proyecto,
+            staticClass: "col-md-5 animated fadeIn"
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "card card-round card-efecto",
+                on: {
+                  click: function($event) {
+                    return _vm.mostrarproyecto(proyectocompartido)
+                  }
+                }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "card-header d-flex justify-content-between align-items-center"
+                  },
+                  [
+                    _c("h2", {
+                      staticClass: "card-title",
+                      domProps: {
+                        textContent: _vm._s(proyectocompartido.nombre)
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm._m(1, true),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "collapse",
+                        attrs: { id: "collapseExample" }
+                      },
+                      [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                return _vm.abrirModal(
+                                  "categoria",
+                                  "actualizar",
+                                  proyectocompartido
+                                )
+                              }
+                            }
+                          },
+                          [_vm._m(2, true), _vm._v("Editar\n            ")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                return _vm.eliminarProyectoCompartido(
+                                  proyectocompartido.id_proyecto
+                                )
+                              }
+                            }
+                          },
+                          [_vm._m(3, true), _vm._v("Eliminar\n            ")]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { attrs: { href: "http://localhost:8000/actividad1" } },
+                  [
+                    _c("div", { staticClass: "card-body" }, [
+                      _vm._m(4, true),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row mt--2" }, [
+                        _vm._m(5, true),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "col-md-7 card-dark bg-primary-gradient card-round text-center blockquote"
+                          },
+                          [
+                            _c("p", {
+                              staticClass: "h4 mx-auto",
+                              domProps: {
+                                textContent: _vm._s(proyectocompartido.estatus)
+                              }
+                            })
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "progress-card" }, [
+                        _c("div", { staticClass: "progress-status" }, [
+                          _c("span", { staticClass: "text-muted" }, [
+                            _vm._v("Avance del proyecto")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass: "text-muted fw-bold",
+                              domProps: {
+                                textContent: _vm._s(
+                                  proyectocompartido.estado_actual
+                                )
+                              }
+                            },
+                            [_vm._v("%")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(6, true)
+                      ])
+                    ])
+                  ]
+                )
+              ]
+            )
+          ]
+        )
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        class: { mostrar: _vm.modal },
+        attrs: { tabindex: "-1", role: "dialog" }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h3", {
+                  staticClass: "modal-title font-weight-bold",
+                  domProps: { textContent: _vm._s(_vm.tituloModal) }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: { type: "button", "aria-label": "Close" },
+                    on: {
+                      click: function($event) {
+                        return _vm.cerrarModal()
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-body" },
+                [
+                  _vm.tipoAccion == 1 || _vm.tipoAccion == 2
+                    ? [
+                        _c("form", [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { attrs: { for: "exampleFormControlInput1" } },
+                              [_vm._v("Nombre del proyecto")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.nombre,
+                                  expression: "nombre"
+                                }
+                              ],
+                              staticClass: "form-control input-solid",
+                              attrs: {
+                                type: "text",
+                                placeholder: "Mi proyecto nuevo"
+                              },
+                              domProps: { value: _vm.nombre },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.nombre = $event.target.value
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { attrs: { for: "exampleFormControlTextarea1" } },
+                              [_vm._v("Descripción")]
+                            ),
+                            _vm._v(" "),
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.describcion,
+                                  expression: "describcion"
+                                }
+                              ],
+                              staticClass: "form-control input-solid",
+                              attrs: { rows: "5" },
+                              domProps: { value: _vm.describcion },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.describcion = $event.target.value
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errorProyectoCompartido,
+                                  expression: "errorProyectoCompartido"
+                                }
+                              ],
+                              staticClass: "form-group row div-error"
+                            },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "text-center text-error" },
+                                _vm._l(
+                                  _vm.errorMostrarMsjProyectoCompartido,
+                                  function(error) {
+                                    return _c("div", {
+                                      key: error,
+                                      staticClass: "alert alert-danger",
+                                      domProps: { textContent: _vm._s(error) }
+                                    })
+                                  }
+                                ),
+                                0
+                              )
+                            ]
+                          )
+                        ])
+                      ]
+                    : _vm._e()
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _vm.tipoAccion == 1
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success font-weight-bold",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.registrarProyectoCompartido()
+                          }
+                        }
+                      },
+                      [_vm._v("Añadir proyecto")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.tipoAccion == 2
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success font-weight-bold",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.actualizarProyectoCompartido()
+                          }
+                        }
+                      },
+                      [_vm._v("Actualizar proyecto")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger font-weight-bold",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.cerrarModal()
+                      }
+                    }
+                  },
+                  [_vm._v("Cancelar")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
+    return _c("span", { staticClass: "btn-label" }, [
+      _c("i", { staticClass: "fa fa-plus-circle" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      {
+        staticClass: "btn btn-lg",
+        attrs: {
+          "data-toggle": "collapse",
+          href: "#collapseExample",
+          role: "button",
+          "aria-expanded": "false",
+          "aria-controls": "collapseExample"
+        }
+      },
+      [_c("i", { staticClass: "fas fa-ellipsis-v" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "fas fa-edit" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "fas fa-trash-alt" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-between" }, [
       _c(
         "div",
-        { staticClass: "col-md-12 d-flex justify-content-between py-4 mx-0" },
-        [_c("h1", [_vm._v("Proyectos asignados")])]
+        {
+          staticClass:
+            "col-md-6 card-dark bg-primary-gradient card-round blockquote text-center"
+        },
+        [_c("p", { staticClass: "h4 mx-auto" }, [_vm._v("0 Tareas faltantes")])]
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("p", { staticClass: "h4 text-center" }, [
-          _vm._v("No tienes proyectos asignados todavia")
-        ])
-      ])
+      _c(
+        "div",
+        {
+          staticClass:
+            "col-md-6 card-dark bg-success-gradient card-round blockquote text-center"
+        },
+        [
+          _c("p", { staticClass: "h4 mx-auto" }, [
+            _vm._v("0 Tareas realizadas")
+          ])
+        ]
+      )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-5 text-center blockquote" }, [
+      _c("p", { staticClass: "h4 mx-auto" }, [_vm._v("Estatus actual")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "progress", staticStyle: { height: "10xpx" } },
+      [
+        _c("div", {
+          staticClass: "progress-bar bg-success-gradient animated slideInLeft",
+          staticStyle: { width: "10%" },
+          attrs: {
+            role: "progressbar",
+            "aria-valuenow": "10",
+            "aria-valuemin": "0",
+            "aria-valuemax": "100",
+            "data-toggle": "tooltip",
+            "data-placement": "top",
+            title: "",
+            "data-original-title": "70%"
+          }
+        })
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -49492,14 +50317,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      id_proyecto: "",
       nombre: "",
       describcion: "",
       estatus: 0,
-      estatus_actual: "",
+      estado_actual: "",
+      ncolaboradores: "",
       fec_ini: "",
       fec_fin: "",
       tareascheck: "0",
@@ -49540,6 +50384,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).catch(function (error) {
         console.log(error);
       });
+      this.sendEmailUser();
+    },
+    actualizarProyecto: function actualizarProyecto() {
+      //validación de datos previos
+      if (this.validarProyecto()) {
+        return;
+      }
+
+      var metodo = this;
+      axios.post("/proyecto/actualizar", {
+        id_proyecto: this.id_proyecto,
+        nombre: this.nombre,
+        describcion: this.describcion,
+        estatus: this.estatus,
+        estado_actual: this.estado_actual,
+        ncolaboradores: this.ncolaboradores,
+        fec_ini: this.fec_ini
+      }).then(function (response) {
+        metodo.cerrarModal();
+        metodo.listarproyecto();
+      }).catch(function (error) {
+        console.log(error);
+      });
     },
     validarProyecto: function validarProyecto() {
       this.errorProyecto = 0;
@@ -49556,7 +50423,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.nombre = "";
       this.describcion = "";
       this.estatus = 0;
-      this.estatus_actual = "";
+      this.estado_actual = "";
       this.fec_ini = "";
       this.fec_fin = "";
     },
@@ -49574,10 +50441,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                   this.nombre = "";
                   this.describcion = "";
                   this.estatus = 0;
-                  this.estatus_actual = "";
+                  this.estado_actual = "";
                   this.fec_ini = "";
                   this.fec_fin = "";
                   this.tipoAccion = 1;
+                  break;
+                }
+              case "actualizar":
+                {
+                  this.modal = 1;
+                  this.tituloModal = "Actualizar Datos del Proyecto";
+                  this.nombre = data['nombre'];
+                  this.describcion = data['describcion'];
+                  this.estado_actual = data['estado_actual'];
+                  this.estatus = data['estatus'];
+                  this.fec_ini = data['fec_ini'];
+                  this.tipoAccion = 2;
+                  this.id_proyecto = data['id_proyecto'];
                   break;
                 }
             }
@@ -49585,10 +50465,59 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           break;
       }
     },
+    eliminarProyecto: function eliminarProyecto(id) {
+      var _this = this;
+
+      console.log(id);
+      var swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+      });
+
+      swalWithBootstrapButtons.fire({
+        title: "¿Estas seguro?",
+        text: "Al hacerlo este proyecto quedara eliminanda de por vida",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, ¡eliminarlo!",
+        cancelButtonText: "No, ¡cancelar!",
+        reverseButtons: true
+      }).then(function (result) {
+        if (result.value) {
+          console.log('ok' + id);
+          var metodo = _this;
+          var url = "/deleteproyecto/" + id;
+          console.log(url);
+          axios.delete(url, {}).then(function (response) {
+            metodo.listarproyecto();
+            swalWithBootstrapButtons.fire("¡Eliminada!", "El proyecto ha sido eliminado de forma correcta.", "success");
+          }).catch(function (error) {
+            console.log(error);
+          });
+        } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire("Cancelado", "El proyecto esta segura", "error");
+        }
+      });
+    },
     mostrarproyecto: function mostrarproyecto() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
       console.log(data);
+    },
+
+    //conexiones con el api de outlook
+    sendEmailUser: function sendEmailUser() {
+      console.log("Entre a sendEmail");
+      axios.post("/contactar", {}).then(function (response) {
+        console.log(response);
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
   },
   mounted: function mounted() {
@@ -49663,7 +50592,48 @@ var render = function() {
                     _vm._v(" "),
                     _vm._m(1, true),
                     _vm._v(" "),
-                    _vm._m(2, true)
+                    _c(
+                      "div",
+                      {
+                        staticClass: "collapse",
+                        attrs: { id: "collapseExample" }
+                      },
+                      [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                return _vm.abrirModal(
+                                  "categoria",
+                                  "actualizar",
+                                  proyecto
+                                )
+                              }
+                            }
+                          },
+                          [_vm._m(2, true), _vm._v("Editar\n            ")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                return _vm.eliminarProyecto(
+                                  proyecto.id_proyecto
+                                )
+                              }
+                            }
+                          },
+                          [_vm._m(3, true), _vm._v("Eliminar\n            ")]
+                        )
+                      ]
+                    )
                   ]
                 ),
                 _vm._v(" "),
@@ -49672,10 +50642,10 @@ var render = function() {
                   { attrs: { href: "http://localhost:8000/actividad1" } },
                   [
                     _c("div", { staticClass: "card-body" }, [
-                      _vm._m(3, true),
+                      _vm._m(4, true),
                       _vm._v(" "),
                       _c("div", { staticClass: "row mt--2" }, [
-                        _vm._m(4, true),
+                        _vm._m(5, true),
                         _vm._v(" "),
                         _c(
                           "div",
@@ -49712,7 +50682,7 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _vm._m(5, true)
+                        _vm._m(6, true)
                       ])
                     ])
                   ]
@@ -49763,98 +50733,112 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _c("form", [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      { attrs: { for: "exampleFormControlInput1" } },
-                      [_vm._v("Nombre del proyecto")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.nombre,
-                          expression: "nombre"
-                        }
-                      ],
-                      staticClass: "form-control input-solid",
-                      attrs: { type: "text", placeholder: "Mi proyecto nuevo" },
-                      domProps: { value: _vm.nombre },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.nombre = $event.target.value
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      { attrs: { for: "exampleFormControlTextarea1" } },
-                      [_vm._v("Descripción")]
-                    ),
-                    _vm._v(" "),
-                    _c("textarea", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.describcion,
-                          expression: "describcion"
-                        }
-                      ],
-                      staticClass: "form-control input-solid",
-                      attrs: { rows: "5" },
-                      domProps: { value: _vm.describcion },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.describcion = $event.target.value
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.errorProyecto,
-                          expression: "errorProyecto"
-                        }
-                      ],
-                      staticClass: "form-group row div-error"
-                    },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "text-center text-error" },
-                        _vm._l(_vm.errorMostrarMsjProyecto, function(error) {
-                          return _c("div", {
-                            key: error,
-                            staticClass: "alert alert-danger",
-                            domProps: { textContent: _vm._s(error) }
-                          })
-                        }),
-                        0
-                      )
-                    ]
-                  )
-                ])
-              ]),
+              _c(
+                "div",
+                { staticClass: "modal-body" },
+                [
+                  _vm.tipoAccion == 1 || _vm.tipoAccion == 2
+                    ? [
+                        _c("form", [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { attrs: { for: "exampleFormControlInput1" } },
+                              [_vm._v("Nombre del proyecto")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.nombre,
+                                  expression: "nombre"
+                                }
+                              ],
+                              staticClass: "form-control input-solid",
+                              attrs: {
+                                type: "text",
+                                placeholder: "Mi proyecto nuevo"
+                              },
+                              domProps: { value: _vm.nombre },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.nombre = $event.target.value
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { attrs: { for: "exampleFormControlTextarea1" } },
+                              [_vm._v("Descripción")]
+                            ),
+                            _vm._v(" "),
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.describcion,
+                                  expression: "describcion"
+                                }
+                              ],
+                              staticClass: "form-control input-solid",
+                              attrs: { rows: "5" },
+                              domProps: { value: _vm.describcion },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.describcion = $event.target.value
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errorProyecto,
+                                  expression: "errorProyecto"
+                                }
+                              ],
+                              staticClass: "form-group row div-error"
+                            },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "text-center text-error" },
+                                _vm._l(_vm.errorMostrarMsjProyecto, function(
+                                  error
+                                ) {
+                                  return _c("div", {
+                                    key: error,
+                                    staticClass: "alert alert-danger",
+                                    domProps: { textContent: _vm._s(error) }
+                                  })
+                                }),
+                                0
+                              )
+                            ]
+                          )
+                        ])
+                      ]
+                    : _vm._e()
+                ],
+                2
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
                 _vm.tipoAccion == 1
@@ -49878,7 +50862,12 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-success font-weight-bold",
-                        attrs: { type: "button" }
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.actualizarProyecto()
+                          }
+                        }
                       },
                       [_vm._v("Actualizar proyecto")]
                     )
@@ -49937,21 +50926,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "collapse", attrs: { id: "collapseExample" } },
-      [
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _c("span", [_c("i", { staticClass: "fas fa-edit" })]),
-          _vm._v("Editar")
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _c("span", [_c("i", { staticClass: "fas fa-trash-alt" })]),
-          _vm._v("Eliminar")
-        ])
-      ]
-    )
+    return _c("span", [_c("i", { staticClass: "fas fa-edit" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "fas fa-trash-alt" })])
   },
   function() {
     var _vm = this
@@ -50862,6 +51843,79 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -50883,7 +51937,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       descripcion: "",
       id_actividad: 0,
       id_proyecto: 0,
-      id_colaborador: 0
+      id_colaborador: 0,
+      estado: ""
     };
   },
 
@@ -50924,9 +51979,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
 
       var metodo = this;
+      var url = "/lista-actividades/${id_actividad}";
       axios.put("/lista-actividades/${id_actividad}", {
         titulo: this.titulo,
         prioridad: this.prioridad,
+        estado: this.estado,
         fec_exp: this.fec_exp,
         hrs_exp: this.hrs_exp,
         descripcion: this.descripcion,
@@ -50943,6 +52000,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     eliminarActividad: function eliminarActividad(id) {
       var _this = this;
 
+      console.log(id);
       var swalWithBootstrapButtons = Swal.mixin({
         customClass: {
           confirmButton: "btn btn-success",
@@ -50961,9 +52019,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         reverseButtons: true
       }).then(function (result) {
         if (result.value) {
-          console.log('ok' + id);
+          console.log("ok" + id);
+          console.log(url);
           var metodo = _this;
-          axios.delete("/lista-actividades/${id}", {
+          var url = "/deleteactividad/" + id;
+          axios.delete(url, {
             //'id': id
           }).then(function (response) {
             metodo.listarActividades();
@@ -51016,6 +52076,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                   this.tipoAccion = 2;
                   this.titulo = data["titulo"];
                   this.prioridad = data["prioridad"];
+                  this.estado = data["estado"];
                   this.fec_exp = data["fec_exp"];
                   this.hrs_exp = data["hrs_exp"];
                   this.descripcion = data["descripcion"];
@@ -51033,6 +52094,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     cerrarModal: function cerrarModal() {
       this.modal = 0;
       this.tituloModal = "";
+    },
+    evaluarAct: function evaluarAct(model) {
+      var metodo = this;
+      var url = "/lista-actividades/";
+      axios.put("/lista-actividades/${id_actividad}", {
+        titulo: model.titulo,
+        prioridad: model.prioridad,
+        estado: 'en evaluacion',
+        fec_exp: model.fec_exp,
+        hrs_exp: model.hrs_exp,
+        descripcion: model.descripcion,
+        id_actividad: model.id_actividad,
+        id_proyecto: model.id_proyecto,
+        id_colaborador: model.id_colaborador
+      }).then(function (response) {
+        metodo.listarActividades();
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
   },
   mounted: function mounted() {
@@ -51610,18 +52690,98 @@ var render = function() {
                             "div",
                             {
                               staticClass:
-                                "col-md-6 d-flex justify-content-start"
+                                "col-md-6 d-flex justify-content-start align-items-center"
                             },
                             [
-                              _c(
-                                "h2",
-                                {
-                                  domProps: {
-                                    textContent: _vm._s(actividad.titulo)
-                                  }
-                                },
-                                [_vm._m(1, true)]
-                              )
+                              actividad.estado == "en progreso"
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass: "btn pl-0 pr-2 py-0 my-0",
+                                      staticStyle: { "font-size": "1em" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.evaluarAct(actividad)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "far fa-check-circle fa-2x"
+                                      })
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              actividad.estado == "en correccion"
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass: "btn pl-0 pr-2 py-0 my-0",
+                                      staticStyle: { "font-size": "1em" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.evaluarAct(actividad)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "far fa-check-circle fa-2x"
+                                      })
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              actividad.estado == "en evaluacion"
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass: "pl-0 pr-2 py-0 my-0",
+                                      staticStyle: {
+                                        "font-size": "1em",
+                                        color: "gray"
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fas fa-check-circle fa-2x"
+                                      })
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              actividad.estado == "aprovado"
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass: "pl-0 pr-2 py-0 my-0",
+                                      staticStyle: {
+                                        "font-size": "1em",
+                                        color: "gray"
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fas fa-check-circle fa-2x"
+                                      })
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              actividad.estado == "aprovado"
+                                ? _c("del", [
+                                    _c("h2", {
+                                      domProps: {
+                                        textContent: _vm._s(actividad.titulo)
+                                      }
+                                    })
+                                  ])
+                                : _c("h2", {
+                                    domProps: {
+                                      textContent: _vm._s(actividad.titulo)
+                                    }
+                                  })
                             ]
                           ),
                           _vm._v(" "),
@@ -51689,12 +52849,35 @@ var render = function() {
                                 "col-md-6 d-flex justify-content-start"
                             },
                             [
-                              _c("p", {
-                                staticClass: "btn-danger btn-round btn-sm mr-1",
-                                domProps: {
-                                  textContent: _vm._s(actividad.prioridad)
-                                }
-                              }),
+                              actividad.prioridad == "Bajo"
+                                ? _c("p", {
+                                    staticClass:
+                                      "btn-primary btn-round btn-sm mr-1",
+                                    domProps: {
+                                      textContent: _vm._s(actividad.prioridad)
+                                    }
+                                  })
+                                : _vm._e(),
+                              _vm._v(" "),
+                              actividad.prioridad == "Medio"
+                                ? _c("p", {
+                                    staticClass:
+                                      "btn-warning btn-round btn-sm mr-1",
+                                    domProps: {
+                                      textContent: _vm._s(actividad.prioridad)
+                                    }
+                                  })
+                                : _vm._e(),
+                              _vm._v(" "),
+                              actividad.prioridad == "Alto"
+                                ? _c("p", {
+                                    staticClass:
+                                      "btn-danger btn-round btn-sm mr-1",
+                                    domProps: {
+                                      textContent: _vm._s(actividad.prioridad)
+                                    }
+                                  })
+                                : _vm._e(),
                               _vm._v(" "),
                               _c(
                                 "p",
@@ -51725,7 +52908,193 @@ var render = function() {
                             ]
                           ),
                           _vm._v(" "),
-                          _vm._m(2, true)
+                          actividad.estado == "en progreso"
+                            ? _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "col-md-6 d-flex justify-content-end"
+                                },
+                                [
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "btn-warning btn-round btn-sm"
+                                    },
+                                    [_vm._v("En progreso")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "btn-primary btn-border btn-round btn-sm"
+                                    },
+                                    [_vm._v("En evaluación")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "btn-danger btn-border btn-round btn-sm"
+                                    },
+                                    [_vm._v("En corrección")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "btn-success btn-border btn-round btn-sm"
+                                    },
+                                    [_vm._v("Aprovado")]
+                                  )
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          actividad.estado == "en evaluacion"
+                            ? _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "col-md-6 d-flex justify-content-end"
+                                },
+                                [
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "btn-warning btn-border btn-round btn-sm"
+                                    },
+                                    [_vm._v("En progreso")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "btn-primary btn-round btn-round btn-sm"
+                                    },
+                                    [_vm._v("En evaluación")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "btn-danger btn-border btn-round btn-sm"
+                                    },
+                                    [_vm._v("En corrección")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "btn-success btn-border btn-round btn-sm"
+                                    },
+                                    [_vm._v("Aprovado")]
+                                  )
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          actividad.estado == "en correccion"
+                            ? _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "col-md-6 d-flex justify-content-end"
+                                },
+                                [
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "btn-warning btn-border btn-round btn-sm"
+                                    },
+                                    [_vm._v("En progreso")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "btn-primary btn-border btn-round btn-sm"
+                                    },
+                                    [_vm._v("En evaluación")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "btn-danger btn-round btn-round btn-sm"
+                                    },
+                                    [_vm._v("En corrección")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "btn-success btn-border btn-round btn-sm"
+                                    },
+                                    [_vm._v("Aprovado")]
+                                  )
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          actividad.estado == "aprovado"
+                            ? _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "col-md-6 d-flex justify-content-end"
+                                },
+                                [
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "btn-warning btn-border btn-round btn-sm"
+                                    },
+                                    [_vm._v("En progreso")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "btn-primary btn-border btn-round btn-sm"
+                                    },
+                                    [_vm._v("En evaluación")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "btn-danger btn-border btn-round btn-sm"
+                                    },
+                                    [_vm._v("En corrección")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "btn-success btn-round btn-round btn-sm"
+                                    },
+                                    [_vm._v("Aprovado")]
+                                  )
+                                ]
+                              )
+                            : _vm._e()
                         ]
                       )
                     ]
@@ -52075,41 +53444,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "btn-label" }, [
       _c("i", { staticClass: "fa fa-plus-circle" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "span",
-      {
-        staticClass: "btn pl-0 pr-2 py-0 my-0",
-        staticStyle: { "font-size": "1em" }
-      },
-      [_c("i", { staticClass: "far fa-check-circle" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6 d-flex justify-content-end" }, [
-      _c("p", { staticClass: "btn-warning btn-round btn-sm" }, [
-        _vm._v("En progreso")
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "btn-primary btn-border btn-round btn-sm" }, [
-        _vm._v("En evaluación")
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "btn-danger btn-border btn-round btn-sm" }, [
-        _vm._v("En corrección")
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "btn-success btn-border btn-round btn-sm" }, [
-        _vm._v("Aprovado")
-      ])
     ])
   }
 ]
