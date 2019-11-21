@@ -240,7 +240,6 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
-      this.sendEmailUser();
     },
 
     validarProyecto() {
@@ -367,29 +366,8 @@ export default {
     sendEmailUser() {
       console.log("Entre a sendEmail");
       axios
-        .post("https://outlook.office.com/api/v2.0/me/sendmail", {
-          Message: {
-            Subject: "¡Nuevo proyecto!",
-            Body: {
-              ContentType: "Text",
-              Content: "Te han agregado a un nuevo proyecto."
-            },
-            ToRecipients: [
-              {
-                EmailAddress: {
-                  Address: "5871@itescam.edu.mx"
-                }
-              }
-            ],
-            Attachments: [
-              {
-                "@odata.type": "#Microsoft.OutlookServices.FileAttachment",
-                Name: "menu.txt",
-                ContentBytes: "bWFjIGFuZCBjaGVlc2UgdG9kYXk="
-              }
-            ]
-          },
-          SaveToSentItems: "false"
+        .post("/contactar", {
+          
         })
         .then(function(response) {
           console.log(response);
