@@ -183,7 +183,7 @@ export default {
     listarProyectoCompartido() {
       let me = this;
       axios
-        .get("/proyectoCompartido")
+        .get("/proyectocompartido")
         .then(function(response) {
           // handle success
           me.arrayProyectoCompartido = response.data;
@@ -201,7 +201,7 @@ export default {
 
       let metodo = this;
       axios
-        .post("/proyectoCompartido", {
+        .post("/proyectocompartido", {
           id_proyecto: this.id_proyecto,
           nombre: this.nombre,
           describcion: this.describcion
@@ -247,7 +247,7 @@ export default {
 
       let metodo = this;
       axios
-        .post("/proyectoCompartido/actualizar", {
+        .post("/proyectocompartido/actualizar", {
           id_proyecto: this.id_proyecto,
           nombre: this.nombre,
           describcion: this.describcion,
@@ -356,14 +356,14 @@ export default {
           if (result.value) {
             console.log('ok' + id)
             let metodo = this;
-            let url = "/deleteproyectoCompartido/" + id;
+            let url = "/deleteproyectocompartido/" + id;
             console.log(url)
             axios
               .delete(url, {
                 
               })
               .then(function(response) {
-                metodo.listarproyecto();
+                metodo.listarProyectoCompartido();
                 swalWithBootstrapButtons.fire(
                   "¡Eliminada!",
                   "El proyecto ha sido eliminado de forma correcta.",
@@ -386,44 +386,9 @@ export default {
           }
         });
     },
-    MostrarProyectoCompartido(data = []) {
+    mostrarproyectocompartido(data = []) {
       console.log(data);
     },
-    //conexiones con el api de outlook
-    sendEmailUser() {
-      console.log("Entre a sendEmail");
-      axios
-        .post("https://outlook.office.com/api/v2.0/me/sendmail", {
-          Message: {
-            Subject: "¡Nuevo proyecto!",
-            Body: {
-              ContentType: "Text",
-              Content: "Te han agregado a un nuevo proyecto."
-            },
-            ToRecipients: [
-              {
-                EmailAddress: {
-                  Address: "5871@itescam.edu.mx"
-                }
-              }
-            ],
-            Attachments: [
-              {
-                "@odata.type": "#Microsoft.OutlookServices.FileAttachment",
-                Name: "menu.txt",
-                ContentBytes: "bWFjIGFuZCBjaGVlc2UgdG9kYXk="
-              }
-            ]
-          },
-          SaveToSentItems: "false"
-        })
-        .then(function(response) {
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    }
   },
   mounted() {
     this.listarProyectoCompartido();

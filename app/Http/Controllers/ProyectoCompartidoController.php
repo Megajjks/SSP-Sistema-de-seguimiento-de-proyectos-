@@ -16,8 +16,8 @@ class ProyectoCompartidoController extends Controller
      */
     public function index()
     {
-        $proyectoCompartidos = ProyectoCompartido::all(); //variable para guarda o traer todos los registros de proyecto
-        return $proyectoCompartidos;
+        $proyectocompartidos = ProyectoCompartido::all(); //variable para guarda o traer todos los registros de proyecto
+        return $proyectocompartidos;
     }
 
     /**
@@ -39,16 +39,14 @@ class ProyectoCompartidoController extends Controller
     public function store(Request $request)
     {
         $fechahoy = Carbon::now(); //obtener las fechas actuales
-        $proyectoCompartidos = new ProyectoCompartido();
-        $proyectoCompartidos->nombre = $request->nombre;
-        $proyectoCompartidos->describcion = $request->describcion;
-        $proyectoCompartidos->estado_actual = 0;
-        $proyectoCompartidos->ncolaboradores = 1;
-        $proyectoCompartidos->estatus = "Asignación";
-        $proyectoCompartidos->fec_ini = $fechahoy->format('Y-m-d');
-        $proyectoCompartidos->save();
-
-
+        $proyectocompartido = new ProyectoCompartido();
+        $proyectocompartido->nombre = $request->nombre;
+        $proyectocompartido->describcion = $request->describcion;
+        $proyectocompartido->estado_actual = 0;
+        $proyectocompartido->ncolaboradores = 1;
+        //$proyectocompartido->estatus = "Asignación";
+        $proyectocompartido->fec_ini = $fechahoy->format('Y-m-d');
+        $proyectocompartido->save();
     }
 
     /**
@@ -59,8 +57,8 @@ class ProyectoCompartidoController extends Controller
      */
     public function show($id)
     {
-        $proyectoCompartidos = ProyectoCompartido::find($id);
-        return $proyectoCompartidos;
+        $proyectocompartido= ProyectoCompartido::find($id);
+        return $proyectocompartido;
     }
 
     /**
@@ -84,15 +82,15 @@ class ProyectoCompartidoController extends Controller
      */
     public function update(Request $request)
     {
-        $proyectoCompartidos = ProyectoCompatido::findOrFail($request->id_proyecto);
-        $proyectoCompartidos->id_proyecto = $request->id_proyecto;
-        $proyectoCompartidos->nombre = $request->nombre;
-        $proyectoCompartidos->describcion = $request->describcion;
-        $proyectoCompartidos->estado_actual = $request->estado_actual;
-        $proyectoCompartidos->estatus = $request->estatus;
-        $proyectoCompartidos->ncolaboradores = $request->ncolaboradores;
-        $proyectoCompartidos->fec_ini = $request->fec_ini;
-        $proyectoCompartidos->save();
+        $proyectocompartido = ProyectoCompatido::findOrFail($request->id_proyecto);
+        $proyectocompartido->id_proyecto = $request->id_proyecto;
+        $proyectocompartido->nombre = $request->nombre;
+        $proyectocompartido->describcion = $request->describcion;
+        $proyectocompartido->estado_actual = $request->estado_actual;
+        $proyectocompartido->estatus = $request->estatus;
+        $proyectocompartido->ncolaboradores = $request->ncolaboradores;
+        $proyectocompartido->fec_ini = $request->fec_ini;
+        $proyectocompartido->save();
     }
 
     /**
@@ -107,8 +105,8 @@ class ProyectoCompartidoController extends Controller
     }
     public function delete($id)
     {
-        $proyectoCompartidos = \App\ProyectoCompartido::find($id);
-        $proyectoCompartidos->delete();
+        $proyectocompartido = \App\ProyectoCompartido::find($id);
+        $proyectocompartido->delete();
         return response()->json(null,204);
     }
 }

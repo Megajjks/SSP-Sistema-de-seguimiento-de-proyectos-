@@ -30,9 +30,9 @@ Route::resource('/proyecto','ProyectoController');
 Route::post('/proyecto/actualizar','ProyectoController@update');
 Route::delete('/deleteproyecto/{id}','ProyectoController@delete');
 
-Route::resource('/proyectoCompartido','ProyectoCompartidoController');
-Route::post('/proyectoCompartido/actualizar','ProyectoCompartidoController@update');
-Route::delete('/deleteproyectoCompartido/{id}','ProyectoCompartidoController@delete');
+Route::resource('/proyectocompartido','ProyectoCompartidoController');
+Route::post('/proyectocompartido/actualizar','ProyectoCompartidoController@update');
+Route::delete('/deleteproyectocompartido/{id}','ProyectoCompartidoController@delete');
 
 Route::resource('/lista-actividades','ActividadController');
 Route::delete('/deleteactividad/{id}','ActividadController@delete');

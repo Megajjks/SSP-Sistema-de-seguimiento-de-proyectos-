@@ -13,7 +13,7 @@ class CreateProyectoscompartidosTable extends Migration
      */
     public function up()
     {
-        Schema::create('proyectoscompartidos', function (Blueprint $table) {
+        Schema::create('proyecto_compartidos', function (Blueprint $table) {
             $table->increments('id_proyecto');
             $table->string('nombre', 100);
             $table->text('describcion');

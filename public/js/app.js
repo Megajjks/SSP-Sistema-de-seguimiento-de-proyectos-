@@ -49424,7 +49424,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     listarProyectoCompartido: function listarProyectoCompartido() {
       var me = this;
-      axios.get("/proyectoCompartido").then(function (response) {
+      axios.get("/proyectocompartido").then(function (response) {
         // handle success
         me.arrayProyectoCompartido = response.data;
       }).catch(function (error) {
@@ -49439,7 +49439,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
 
       var metodo = this;
-      axios.post("/proyectoCompartido", {
+      axios.post("/proyectocompartido", {
         id_proyecto: this.id_proyecto,
         nombre: this.nombre,
         describcion: this.describcion
@@ -49481,7 +49481,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
 
       var metodo = this;
-      axios.post("/proyectoCompartido/actualizar", {
+      axios.post("/proyectocompartido/actualizar", {
         id_proyecto: this.id_proyecto,
         nombre: this.nombre,
         describcion: this.describcion,
@@ -49581,10 +49581,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         if (result.value) {
           console.log('ok' + id);
           var metodo = _this;
-          var url = "/deleteproyectoCompartido/" + id;
+          var url = "/deleteproyectocompartido/" + id;
           console.log(url);
           axios.delete(url, {}).then(function (response) {
-            metodo.listarproyecto();
+            metodo.listarProyectoCompartido();
             swalWithBootstrapButtons.fire("¡Eliminada!", "El proyecto ha sido eliminado de forma correcta.", "success");
           }).catch(function (error) {
             console.log(error);
@@ -49596,39 +49596,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
       });
     },
-    MostrarProyectoCompartido: function MostrarProyectoCompartido() {
+    mostrarproyectocompartido: function mostrarproyectocompartido() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
       console.log(data);
-    },
-
-    //conexiones con el api de outlook
-    sendEmailUser: function sendEmailUser() {
-      console.log("Entre a sendEmail");
-      axios.post("https://outlook.office.com/api/v2.0/me/sendmail", {
-        Message: {
-          Subject: "¡Nuevo proyecto!",
-          Body: {
-            ContentType: "Text",
-            Content: "Te han agregado a un nuevo proyecto."
-          },
-          ToRecipients: [{
-            EmailAddress: {
-              Address: "5871@itescam.edu.mx"
-            }
-          }],
-          Attachments: [{
-            "@odata.type": "#Microsoft.OutlookServices.FileAttachment",
-            Name: "menu.txt",
-            ContentBytes: "bWFjIGFuZCBjaGVlc2UgdG9kYXk="
-          }]
-        },
-        SaveToSentItems: "false"
-      }).then(function (response) {
-        console.log(response);
-      }).catch(function (error) {
-        console.log(error);
-      });
     }
   },
   mounted: function mounted() {
