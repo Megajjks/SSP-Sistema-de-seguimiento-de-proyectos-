@@ -10,6 +10,8 @@ class Proyecto extends Model
     protected $primaryKey = 'id_proyecto';
     protected $fillable = ['nombre','describcion','estado_actual','estatus','ncolaboradores','fec_ini','fec_fin'];
 
+    protected $appends = ['slug'];
+
     //relaciones
     public function actividades()
     {
@@ -19,4 +21,8 @@ class Proyecto extends Model
     {
         return $this->hasMany('App\Colaborador');
     }
+    public function getSlugAttribute(){
+        return route('proyectopriv.view', $this->id_proyecto);
+    }
+
 }

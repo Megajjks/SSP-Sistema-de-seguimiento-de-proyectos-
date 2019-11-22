@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="css/settings.css">
+    <link rel="stylesheet" href="{{ asset('css/settings.css') }}">
     
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-	<link rel="icon" href="img/icono2.ico" type="image/x-icon"/>
-
+	<link rel="icon" href="{{ asset('img/icono2.ico') }}" type="image/x-icon"/>
+	
 	<!-- Fonts and icons -->
-	<script src="js/plugin/webfont/webfont.min.js"></script>
+	<script src="{{ asset('js/plugin/webfont/webfont.min.js') }}"></script>
 	<script>
 		WebFont.load({
 			google: {"families":["Lato:300,400,700,900"]},
-			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['css/fonts.min.css']},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['{{ asset("css/fonts.min.css") }}']},
 			active: function() {
 				sessionStorage.fonts = true;
 			}
@@ -23,11 +23,11 @@
 	</script>
 
 	<!-- CSS Files -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/atlantis.min.css">
+	<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/atlantis.min.css') }}">
 
 	<!-- CSS Just for demo purpose, don't include it in your project -->
-	<link rel="stylesheet" href="/css/demo.css">
+	<link rel="stylesheet" href="{{ asset('css/demo.css') }}">
 
     <title>Dashboard User</title>
 </head>
@@ -39,7 +39,7 @@
 			<div class="logo-header" data-background-color="blue">
 				
 				<a href="index.html" class="logo">
-					<img src="img/logo2.png" alt="navbar brand" class="navbar-brand">
+					<img src="{{ asset('img/logo2.png') }}" alt="navbar brand" class="navbar-brand">
 				</a>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
@@ -93,7 +93,7 @@
 											</a>
 											<a href="#">
 												<div class="notif-img"> 
-													<img src="img/profile2.jpg" alt="Img Profile">
+													<img src="{{ asset('img/profile2.jpg') }}" alt="Img Profile">
 												</div>
 												<div class="notif-content">
 													<span class="block">
@@ -133,42 +133,42 @@
         Scripts
     ***********************************-->
     <!--   Core JS Files   -->
-	<script src="js/core/jquery.3.2.1.min.js"></script>
-	<script src="js/core/popper.min.js"></script>
-	<script src="js/core/bootstrap.min.js"></script>
+	<script src="{{ asset('js/core/jquery.3.2.1.min.js') }}"></script>
+	<script src="{{ asset('js/core/popper.min.js') }}"></script>
+	<script src="{{ asset('js/core/bootstrap.min.js') }}"></script>
 
 	<!-- jQuery UI -->
-	<script src="js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-	<script src="js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+	<script src="{{ asset('js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
+	<script src="{{ asset('js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"') }}></script>
 
 	<!-- jQuery Scrollbar -->
-	<script src="js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+	<script src="{{ asset('js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"') }}></script>
 
 
 	<!-- Chart JS -->
-	<script src="js/plugin/chart.js/chart.min.js"></script>
+	<script src="{{ asset('js/plugin/chart.js/chart.min.js') }}"></script>
 
 	<!-- jQuery Sparkline -->
-	<script src="js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+	<script src="{{ asset('js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
 
 	<!-- Chart Circle -->
-	<script src="js/plugin/chart-circle/circles.min.js"></script>
+	<script src="{{ asset('js/plugin/chart-circle/circles.min.js') }}"></script>
 
 	<!-- Datatables -->
-	<script src="js/plugin/datatables/datatables.min.js"></script>
+	<script src="{{ asset('js/plugin/datatables/datatables.min.js') }}"></script>
 
 	<!-- Bootstrap Notify -->
-	<script src="js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+	<script src="{{ asset('js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
 
 	<!-- jQuery Vector Maps -->
-	<script src="js/plugin/jqvmap/jquery.vmap.min.js"></script>
-	<script src="js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+	<script src="{{ asset('js/plugin/jqvmap/jquery.vmap.min.js') }}"></script>
+	<script src="{{ asset('js/plugin/jqvmap/maps/jquery.vmap.world.js') }}"></script>
 
 	<!-- Sweet Alert -->
-	<script src="js/sweetalert2.all.min.js"></script>
+	<script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 
 <!-- Atlantis JS -->
-<script src="js/atlantis.min.js"></script>
+<script src="{{ asset('js/atlantis.min.js') }}"></script>
 	<script>
 		Circles.create({
 			id:'circles-1',
@@ -216,7 +216,7 @@
 		})
 	</script>
 	<!--<script src="js/plantilla.js"></script>-->
-	<script src="js/app.js"></script>
+	<script src="{{ asset('js/app.js') }}"></script>
 	
 </body>
 </html>

@@ -1,0 +1,43 @@
+body{
+    background-color: #E4E7EE;
+}
+text-default{
+    color:#404040;
+}
+color-nav{
+    background-color: #FFFFFF;
+}
+img-t{
+    max-width: 30px;
+}
+.progressbar__label{
+    color: rgb(111, 213, 127) !important;
+}
+
+.card-efecto {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  }
+
+.card-efecto:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  }
+
+  .modal-content {
+    width: 100% !important;
+    position: fixed !important;
+  }
+  .mostrar {
+    display: list-item !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    background-color: #3c29297a !important;
+  }
+  .div-error {
+    display: flex;
+    justify-content: center;
+  }
+  .text-error {
+    color: red !important;
+    font-weight: bold;
+  }

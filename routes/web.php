@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Proyecto;
 
 Route::get('/', function () {
     //return view('template/contenido');
@@ -21,9 +22,10 @@ Route::get('/home', function () {
     return view('template/contenido');
 });
 
-Route::get('/actividad1', function () {
+Route::get('/proyecto-view/{id}', function ($id) {
     //return view('template/contenido');
-    return view('template/vproyecto');
+    $proyecto = Proyecto::find($id);
+    return view('template/vproyecto',$proyecto);
 });
 
 Route::get('/colaborador', function () {
@@ -38,6 +40,7 @@ Route::get('/lider-p', function () {
 
 Route::resource('/proyecto','ProyectoController');
 Route::post('/proyecto/actualizar','ProyectoController@update');
+Route::post('/proyecto/update/{id}','ProyectoController@updateproyecto');
 Route::delete('/deleteproyecto/{id}','ProyectoController@delete');
 
 Route::resource('/lista-actividades','ActividadController');
@@ -47,3 +50,8 @@ Route::delete('/deleteactividad/{id}','ActividadController@delete');
 Route::post('/email1','Email1Controller@email')->name('email1.email');
 //Route::post('/contactar', 'Email1Controller@contact')->name('contact');
 Route::post('/contactar', 'Email1Controller@contact');
+
+
+Route::get('/proyectop/{id}','ProyectoController@proyectov')->name('proyectopriv.view');
+//retornar un proyecto
+Route::get('/unproyecto/{id}','ProyectoController@unproyecto');

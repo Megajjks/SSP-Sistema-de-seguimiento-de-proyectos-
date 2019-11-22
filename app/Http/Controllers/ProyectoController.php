@@ -43,7 +43,7 @@ class ProyectoController extends Controller
         $proyecto->describcion = $request->describcion;
         $proyecto->estado_actual = 0;
         $proyecto->ncolaboradores = 1;
-        //$proyecto->estatus = "Asignación";
+        $proyecto->estatus = "En progreso";
         $proyecto->fec_ini = $fechahoy->format('Y-m-d');
         $proyecto->save();
 
@@ -59,6 +59,7 @@ class ProyectoController extends Controller
     {
         $proyecto = Proyecto::find($id);
         return $proyecto;
+        //return view('template.vproyecto');
     }
 
     /**
@@ -93,6 +94,25 @@ class ProyectoController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateproyecto(Request $request)
+    {
+        $proyecto = Proyecto::findOrFail($request->id_pro);
+        $proyecto->nombre = $request->nombre_pro;
+        $proyecto->describcion = $request->describcion_pro;
+        $proyecto->estado_actual = $request->estado_actual_pro;
+        $proyecto->estatus = $request->estatus_pro;
+        $proyecto->ncolaboradores = $request->ncolaboradores_pro;
+        $proyecto->fec_ini = $request->fec_ini_pro;
+        $proyecto->save();
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -107,5 +127,18 @@ class ProyectoController extends Controller
         $proyecto = \App\Proyecto::find($id);
         $proyecto->delete();
         return response()->json(null,204);
+    }
+
+    public function proyectov($id)
+    {
+        $proyecto = Proyecto::find($id);
+        //return $proyecto;
+        return view('template.vproyecto',array('id'=>$id));
+        //return redirect('/proyecto-view/'.$id);
+    }
+
+    public function unproyecto($id){
+        $proyecto = Proyecto::find($id);
+        return $proyecto;
     }
 }

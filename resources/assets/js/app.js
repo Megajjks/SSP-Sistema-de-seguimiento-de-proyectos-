@@ -16,13 +16,12 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('proyectos-asignados', require('./components/ProyectosAsignados.vue'));
-Vue.component('proyectos-propios', require('./components/ProyectosPropios.vue'));
-Vue.component('vista-proyecto', require('./components/VistaProyecto.vue'));
 Vue.component('error-404', require('./components/Error404-b.vue'));
-Vue.component('lista-actividades',require('./components/ListaActividades.vue'));
-Vue.component('actividad',require('./components/Actividad.vue'));
-Vue.component('datos-proyecto',require("./components/DatosProyecto.vue"));
+//Componentes para un proyecto Privado
+Vue.component('proyectos-propios', require('./components/proyectPropio/ProyectosPropios.vue'));
+Vue.component('vista-proyecto-propio', require('./components/proyectPropio/VistaProyectoPropio.vue'));
+//Componentes para un proyecto compartido
+Vue.component('proyectos-asignados', require('./components/proyectoCompartido/ProyectosAsignados.vue'));
 
 const app = new Vue({
     el: '#app',
