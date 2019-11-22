@@ -16,6 +16,11 @@ Route::get('/', function () {
     return view('login/login');
 });
 
+Route::get('/', function () {
+    //return view('template/contenido');
+    return view('auth/login');
+});  
+
 Route::get('/home', function () {
     //return view('template/contenido');
     return view('template/contenido');
@@ -47,3 +52,6 @@ Route::delete('/deleteactividad/{id}','ActividadController@delete');
 Route::post('/email1','Email1Controller@email')->name('email1.email');
 //Route::post('/contactar', 'Email1Controller@contact')->name('contact');
 Route::post('/contactar', 'Email1Controller@contact');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
