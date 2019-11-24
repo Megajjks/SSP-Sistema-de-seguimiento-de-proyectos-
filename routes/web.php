@@ -20,7 +20,17 @@ Route::get('/', function () {
 Route::get('/', function () {
     //return view('template/contenido');
     return view('auth/login');
-});  
+}); 
+
+Route::get('/login-view', function () {
+    //return view('template/contenido');
+    return view('auth/login');
+})->name('log'); 
+
+Route::get('/registro-exitoso', function () {
+    //return view('template/contenido');
+    return view('auth/sucess-register');
+})->name('resucess'); 
 
 Route::get('/home', function () {
     //return view('template/contenido');
@@ -55,14 +65,11 @@ Route::delete('/deleteactividad/{id}','ActividadController@delete');
 Route::post('/email1','Email1Controller@email')->name('email1.email');
 //Route::post('/contactar', 'Email1Controller@contact')->name('contact');
 Route::post('/contactar', 'Email1Controller@contact');
-<<<<<<< HEAD
 
 
 Route::get('/proyectop/{id}','ProyectoController@proyectov')->name('proyectopriv.view');
 //retornar un proyecto
 Route::get('/unproyecto/{id}','ProyectoController@unproyecto');
-=======
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
->>>>>>> 7053b3d237ece152745e6daa0d48d3e4f6b53c81

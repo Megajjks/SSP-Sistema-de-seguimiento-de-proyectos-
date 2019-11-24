@@ -8,8 +8,12 @@
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									Jayro Salazar
-									<span class="user-level">Colaborador</span>
+									{{ Auth::user()->name }}
+									@if(Auth::user()->rol === 1)
+										<span class="user-level">Lider de proyecto</span>
+									@else
+										<span class="user-level">Colaborador</span>
+									@endif
 									<span class="caret"></span>
 								</span>
 							</a>
@@ -19,19 +23,24 @@
 								<ul class="nav nav-primary">
 									<li class="">
 										<a href="#">
-											<span class="link-collapse">Mi perfil</span>
+											<span class="dropdown-item ">Mi perfil</span>
 										</a>
 									</li>
 									<li class="">
 										<a href="#">
-											<span class="link-collapse">Configuración</span>
+											<span class="dropdown-item ">Configuración</span>
 										</a>
 									</li>
 									<li class="">
-										<a href="#">
-											<span class="link-collapse">Cerrar sesión</span>
+										<a class="dropdown-item" href="{{ route('logout') }}"
+										onclick="event.preventDefault();
+														document.getElementById('logout-form').submit();">
+											{{ __('Cerrar sesión') }}
 										</a>
 									</li>
+									<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
 								</ul>
 							</div>
 						</div>
