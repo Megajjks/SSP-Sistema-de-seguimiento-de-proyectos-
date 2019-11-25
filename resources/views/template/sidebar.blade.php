@@ -3,7 +3,11 @@
 				<div class="sidebar-content">
 					<div class="user">
 						<div class="avatar-sm float-left mr-2">
-							<img src="{{ asset('img/usertest.jpg') }}" alt="..." class="avatar-img rounded-circle">
+							@if(Auth::user()->rol === 1)
+								<img src="https://api.adorable.io/avatars/270/lider proyectov.png" alt="..." class="avatar-img rounded-circle">
+							@else	
+								<img src="https://api.adorable.io/avatars/270/colaborador proe.png" alt="..." class="avatar-img rounded-circle">
+							@endif
 						</div>
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
