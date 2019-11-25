@@ -46,12 +46,14 @@ Route::get('/proyecto-view/{id}', function ($id) {
 Route::get('/colaborador', function () {
     //return view('template/contenido');
     return view('colaborador/menu-colaborador');
-});
+})->middleware('auth');
+//->middleware('auth', 'role:colaborador')
 
 Route::get('/lider-p', function () {
     //return view('template/contenido');
     return view('liderproyecto/menu-liderproyecto');
-});
+})->middleware('auth');
+//->middleware('auth', 'role:lider-proyecto')
 
 Route::resource('/proyecto','ProyectoController');
 Route::post('/proyecto/actualizar','ProyectoController@update');

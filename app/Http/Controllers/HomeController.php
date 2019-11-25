@@ -21,8 +21,31 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('home');
+        $userRol = $request->user()->rol;
+        if($userRol == 1){
+            return redirect('/lider-p');
+        }else{
+            return redirect('/colaborador');
+        }
+        //$isLider = $request->user()->authorizeRoles('lider');
+        //$isColaborador = $request->user()->authorizeRoles('colaborador');
+        //if($isLider){
+        //    return redirect('/lider-p');
+        //}
+        
+        //if($isColaborador){
+        //    return redirect('/colaborador');
+        //}
+        
+        //return view('home');
     }
+    
+    //public function someAdminStuff(Request $request)
+    //{
+    //    $request->user()->authorizeRoles('lider');
+    //    return redirect('/lider-p');
+    //    //return view('home');
+    //}
 }
