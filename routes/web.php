@@ -60,6 +60,11 @@ Route::post('/proyecto/actualizar','ProyectoController@update');
 Route::post('/proyecto/update/{id}','ProyectoController@updateproyecto');
 Route::delete('/deleteproyecto/{id}','ProyectoController@delete');
 
+Route::resource('/sharedproject','SharedProjectController');
+Route::post('/sharedproject/actualizar','SharedProjectController@update');
+Route::post('/sharedproject/update/{id}','SharedProjectController@updateproyecto');
+Route::delete('/deletesharedproject/{id}','SharedProjectController@delete');
+
 Route::resource('/lista-actividades','ActividadController');
 Route::delete('/deleteactividad/{id}','ActividadController@delete');
 

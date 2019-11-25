@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProyectoTable extends Migration
+class CreateSharedprojectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateProyectoTable extends Migration
      */
     public function up()
     {
-        Schema::create('proyectos', function (Blueprint $table) {
+        Schema::create('sharedprojects', function (Blueprint $table) {
             $table->increments('id_proyecto');
             $table->string('nombre', 100);
             $table->text('describcion');
@@ -33,6 +33,6 @@ class CreateProyectoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proyecto');
+        Schema::dropIfExists('sharedprojects');
     }
 }
