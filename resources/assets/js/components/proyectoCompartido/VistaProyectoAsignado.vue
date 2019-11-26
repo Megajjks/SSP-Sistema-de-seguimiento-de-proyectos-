@@ -5,7 +5,15 @@
         <i class="fas fa-arrow-left"></i>
       </span>
       <h1 class="font-weight-bold h1">Mi proyecto compartido</h1>
-      <span> </span>
+      <button
+        class="btn btn-success font-weight-bold btn-round"
+        type="button"
+        @click="abrirModalColaborador()"
+      >
+        <span class="btn-label">
+          <i class="fa fa-user-plus"></i>
+        </span> Agregar Usuario
+      </button>
     </div>
     <div class="col-md-12 row">
       <div class="col-md-12 animated fadeIn">
@@ -200,9 +208,7 @@
                     v-model="colaborador"
                     id="exampleFormControlSelect1"
                   >
-                    <option>Jayro Salazar</option>
-                    <option>Uziel Can</option>
-                    <option>Leonardo Catch</option>
+                    <option v-for="col in arrayColaborador" :key="col">{{col}}</option>
                   </select>
                 </div>
                 <div class="form-group col-md-3">
@@ -256,6 +262,44 @@
             <button
               type="button"
               @click="cerrarModal()"
+              class="btn btn-danger font-weight-bold"
+            >Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Modal añadir / eliminar colaborador-->
+    <div class="modal fade" tabindex="-1" :class="{'mostrar' : modal2}" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title font-weight-bold">Colaboradores del proyecto</h3>
+            <button type="button" @click="cerrarModal()" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="exampleFormControlInput1">Nombre del colaborador</label>
+                <input
+                  type="text"
+                  v-model="nameColaborador"
+                  class="form-control input-solid"
+                  placeholder="Fulanoide Silverio"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              @click="registrarcolaborador()"
+              class="btn btn-success font-weight-bold"
+            >Añadir colaborador</button>
+            <button
+              type="button"
+              @click="cerrarModalColaborador()"
               class="btn btn-danger font-weight-bold"
             >Cancelar</button>
           </div>
@@ -316,10 +360,13 @@
 <script>
 export default {
   data() {
-    return { 
+    return {
+      arrayColaborador:['Jayro Salazar', 'Uziel Can', 'Leonardo Catch'], 
+      nameColaborador:"",
       proyecto:[],
       arrayActividades: [],
       modal: 0,
+      modal2: 0,
       tituloModal: "",
       tipoAccion: 0,
       errorActividad: 0,
@@ -492,6 +539,10 @@ export default {
       if (this.errorMostrarMsjActividad.length) this.errorActividad = 1;
       return this.errorActividad;
     },
+    abrirModalColaborador(){
+      this.modal2 = 1;
+      this.nameColaborador="";
+    },
     abrirModal(modelo, accion, data = []) {
       switch (modelo) {
         case "actividad":
@@ -532,6 +583,10 @@ export default {
     cerrarModal() {
       this.modal = 0;
       this.tituloModal = "";
+    },
+    cerrarModalColaborador(){
+      this.modal2 = 0;
+      this.nameColaborador="";
     },
     realizarAct(model) {
       let metodo = this;
@@ -676,6 +731,32 @@ export default {
       console.log(totalpts)
       console.log(array)
       this.listarProyecto(2);
+    },
+    registrarcolaborador(){
+      let colaborador = this.nameColaborador;
+      this.arrayColaborador.push(colaborador);
+      this.cerrarModalColaborador();
+      //console.log(colaborador);
+      let numcolaboradores = this.arrayColaborador.length;
+      let url ="/sharedproject/update/" + this.proyecto.id_proyecto;
+       axios
+        .post(url, {
+          id_pro : this.proyecto.id_proyecto,
+          nombre_pro: this.proyecto.nombre,
+          describcion_pro: this.proyecto.describcion,
+          estatus_pro: this.proyecto.estatus,
+          estado_actual_pro: this.proyecto.estado_actual,
+          ncolaboradores_pro: numcolaboradores,
+          fec_ini_pro: this.proyecto.fec_ini
+        })
+        .then(function(response) {
+          metodo.listarActividades();
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+        console.log(numcolaboradores)
+        this.listarProyecto(2);
     }
   },
   mounted() {
