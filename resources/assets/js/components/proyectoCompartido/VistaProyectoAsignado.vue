@@ -27,8 +27,17 @@
             v-for="actividad in arrayActividades"
             :key="actividad.id_actividad"
           >
+            <!--Card confirmar actividad actividades-->
+            <div class="col-md-12 card d-flex flex-column justify-content-center align-items-center px-0 py-0 my-0 mx-0 animated fadeIn" v-if="actividad.estado=='en evaluacion'">
+              <h2 class="card-header font-weight-bold">~ Evaluación de la actividad " <span v-text="actividad.titulo"></span> " ~</h2>
+              <h3 class="card-body">La actividad " <span class="font-weight-bold" v-text="actividad.titulo"></span> " ha sido acabada, ¿confirma que ha sido realizada correctamente o hay correcciones por hacer?</h3>
+              <div class="d-flex justify-content-between align-items-center my-1 card-footer">
+                <button type="button" class="btn btn-outline-success btn-sm btn-round mx-3" @click="aprovarAct(actividad)">Actividad Aprobada</button>
+                <button type="button" class="btn btn-outline-danger btn-sm btn-round mx-3" @click="corregirAct(actividad)">Actividad En Corrección</button>
+              </div>
+            </div>
             <!--Card actividades-->
-            <div class="col-md-12 d-flex flex-column px-0 py-0 my-0 mx-0">
+            <div class="col-md-12 d-flex flex-column px-0 py-0 my-0 mx-0 animated fadeIn" v-else>
               <div
                 class="col-md-12 d-flex justify-content-between align-items-center px-0 py-0 my-0 mx-0"
               >
@@ -524,7 +533,76 @@ export default {
       this.modal = 0;
       this.tituloModal = "";
     },
+    realizarAct(model) {
+      let metodo = this;
+      axios
+        .put("/lista-actividades-asignadas/${id_actividad}", {
+          titulo: model.titulo,
+          prioridad: model.prioridad,
+          estado: 'en progreso',
+          colaborador: model.colaborador,
+          fec_exp: model.fec_exp,
+          hrs_exp: model.hrs_exp,
+          descripcion: model.descripcion,
+          id_actividad: model.id_actividad,
+          id_proyecto: model.id_proyecto,
+          id_colaborador: model.id_colaborador
+        })
+        .then(function(response) {
+          metodo.listarActividades();
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+        this.vpuntos(this.arrayActividades, this.proyecto);
+    },
     evaluarAct(model) {
+      let metodo = this;
+      axios
+        .put("/lista-actividades-asignadas/${id_actividad}", {
+          titulo: model.titulo,
+          prioridad: model.prioridad,
+          estado: 'en evaluacion',
+          colaborador: model.colaborador,
+          fec_exp: model.fec_exp,
+          hrs_exp: model.hrs_exp,
+          descripcion: model.descripcion,
+          id_actividad: model.id_actividad,
+          id_proyecto: model.id_proyecto,
+          id_colaborador: model.id_colaborador
+        })
+        .then(function(response) {
+          metodo.listarActividades();
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+        this.vpuntos(this.arrayActividades, this.proyecto);
+    },
+    corregirAct(model) {
+      let metodo = this;
+      axios
+        .put("/lista-actividades-asignadas/${id_actividad}", {
+          titulo: model.titulo,
+          prioridad: model.prioridad,
+          estado: 'en correccion',
+          colaborador: model.colaborador,
+          fec_exp: model.fec_exp,
+          hrs_exp: model.hrs_exp,
+          descripcion: model.descripcion,
+          id_actividad: model.id_actividad,
+          id_proyecto: model.id_proyecto,
+          id_colaborador: model.id_colaborador
+        })
+        .then(function(response) {
+          metodo.listarActividades();
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+        this.vpuntos(this.arrayActividades, this.proyecto);
+    },
+    aprovarAct(model) {
       let metodo = this;
       axios
         .put("/lista-actividades-asignadas/${id_actividad}", {
