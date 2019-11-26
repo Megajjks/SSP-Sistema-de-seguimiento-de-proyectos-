@@ -43,6 +43,11 @@ Route::get('/proyecto-view/{id}', function ($id) {
     return view('template/vproyecto',$proyecto);
 });
 
+Route::get('/proyecto-view-colaborador/2', function () {
+    //return view('template/contenido');
+    return view('template/vproyectoasignadocolaborador');
+});
+
 Route::get('/colaborador', function () {
     //return view('template/contenido');
     return view('colaborador/menu-colaborador');
