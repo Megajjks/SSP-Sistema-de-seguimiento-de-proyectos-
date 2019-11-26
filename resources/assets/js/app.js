@@ -23,6 +23,7 @@ Vue.component('vista-proyecto-propio', require('./components/proyectPropio/Vista
 //Componentes para un proyecto compartido
 Vue.component('proyectos-asignados', require('./components/proyectoCompartido/ProyectosAsignados.vue'));
 Vue.component('proyectos-asignados-colaborador', require('./components/proyectoCompartido/ProyectosAsignadosColaborador.vue'));
+Vue.component('vista-proyecto-asignado', require('./components/proyectoCompartido/VistaProyectoAsignado.vue'));
 
 const app = new Vue({
     el: '#app',

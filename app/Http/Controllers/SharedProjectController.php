@@ -118,4 +118,17 @@ class SharedProjectController extends Controller
         $proyecto->delete();
         return response()->json(null,204);
     }
+
+    public function proyectov($id)
+    {
+        $proyecto = sharedproject::find($id);
+        //return $proyecto;
+        return view('template.vproyectoasignado',array('id'=>$id));
+        //return redirect('/proyecto-view/'.$id);
+    }
+
+    public function unproyecto($id){
+        $proyecto = sharedproject::find($id);
+        return $proyecto;
+    }
 }

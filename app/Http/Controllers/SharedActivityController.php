@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB; //para traer base de datos
+use App\sharedactivity; //importamas el modelo al que estara vinculado
 
 class SharedActivityController extends Controller
 {
@@ -13,7 +15,8 @@ class SharedActivityController extends Controller
      */
     public function index()
     {
-        //
+        $actividades = sharedactivity::all();
+        return $actividades;
     }
 
     /**
@@ -34,7 +37,18 @@ class SharedActivityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $actividad = new sharedactivity();
+        $actividad->titulo = $request->titulo;
+        $actividad->descripcion = $request->descripcion;
+        $actividad->prioridad = $request->prioridad;
+        //$actividad->estado = "En progreso";
+        $actividad->colaborador = $request->colaborador;
+        $actividad->fec_exp = $request->fec_exp;
+        $actividad->hrs_exp = $request->hrs_exp;
+        //llaves foraneas
+        $actividad->id_proyecto = 2;
+        $actividad->id_colaborador = 1;
+        $actividad->save();
     }
 
     /**
@@ -66,9 +80,20 @@ class SharedActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $actividad = sharedactivity::findOrFail($request->id_actividad);
+        $actividad->titulo = $request->titulo;
+        $actividad->descripcion = $request->descripcion;
+        $actividad->prioridad = $request->prioridad;
+        $actividad->estado = $request->estado;
+        $actividad->colaborador = $request->colaborador;
+        $actividad->fec_exp = $request->fec_exp;
+        $actividad->hrs_exp = $request->hrs_exp;
+        //llaves foraneas
+        $actividad->id_proyecto = $request->id_proyecto;
+        $actividad->id_colaborador = $request->id_colaborador;
+        $actividad->save();
     }
 
     /**
@@ -79,6 +104,14 @@ class SharedActivityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $actividad = \App\sharedactivity::find($id);
+        $actividad->delete();
+        return response()->json('successfully deleted');
+    }
+    public function delete($id)
+    {
+        $actividad = \App\sharedactivity::find($id);
+        $actividad->delete();
+        return response()->json(null,204);
     }
 }

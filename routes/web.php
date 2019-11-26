@@ -68,6 +68,9 @@ Route::delete('/deletesharedproject/{id}','SharedProjectController@delete');
 Route::resource('/lista-actividades','ActividadController');
 Route::delete('/deleteactividad/{id}','ActividadController@delete');
 
+Route::resource('/lista-actividades-asignadas','SharedActivityController');
+Route::delete('/deleteactividad-asignadas/{id}','SharedActivityController@delete');
+
 //emails routes
 Route::post('/email1','Email1Controller@email')->name('email1.email');
 //Route::post('/contactar', 'Email1Controller@contact')->name('contact');
@@ -75,8 +78,10 @@ Route::post('/contactar', 'Email1Controller@contact');
 
 
 Route::get('/proyectop/{id}','ProyectoController@proyectov')->name('proyectopriv.view');
+Route::get('/proyectoasig/{id}','SharedProjectController@proyectov')->name('proyectoasig.view');
 //retornar un proyecto
 Route::get('/unproyecto/{id}','ProyectoController@unproyecto');
+Route::get('/unproyectoasig/{id}','SharedProjectController@unproyecto');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

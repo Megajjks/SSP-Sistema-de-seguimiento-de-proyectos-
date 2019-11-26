@@ -22,6 +22,6 @@ class sharedproject extends Model
         return $this->hasMany('App\Colaborador');
     }
     public function getSlugAttribute(){
-        return route('proyectopriv.view', $this->id_proyecto);
+        return route('proyectoasig.view', $this->id_proyecto);
     }
 }
