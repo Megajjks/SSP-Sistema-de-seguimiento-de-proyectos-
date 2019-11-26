@@ -632,7 +632,6 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
-        this.vpuntos(this.arrayActividades, this.proyecto);
     },
     corregirAct(model) {
       let metodo = this;
@@ -655,7 +654,6 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
-        this.vpuntos(this.arrayActividades, this.proyecto);
     },
     aprovarAct(model) {
       let metodo = this;
@@ -678,7 +676,6 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
-        this.vpuntos(this.arrayActividades, this.proyecto);
     },
     listarProyecto(id) {
       let me = this;
@@ -757,6 +754,72 @@ export default {
         });
         console.log(numcolaboradores)
         this.listarProyecto(2);
+    },
+    //emails
+    sendEmailAsignarProyecto() {
+      console.log("Entre a sendEmail");
+      axios
+        .post("/asignarproyecto", {
+          
+        })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    sendEmailAsignarActividad() {
+      console.log("Entre a sendEmail");
+      axios
+        .post("/asignaractividad", {
+          
+        })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    sendEmailVerificarActividad() {
+      console.log("Entre a sendEmail");
+      axios
+        .post("/verificaractividad", {
+          
+        })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    sendEmailRechazarActividad() {
+      console.log("Entre a sendEmail");
+      axios
+        .post("/rechazaractividad", {
+          
+        })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    sendEmailAprobarActividad() {
+      console.log("Entre a sendEmail");
+      axios
+        .post("/aprobaractividad", {
+          
+        })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   },
   mounted() {

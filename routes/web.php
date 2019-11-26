@@ -75,6 +75,11 @@ Route::delete('/deleteactividad-asignadas/{id}','SharedActivityController@delete
 Route::post('/email1','Email1Controller@email')->name('email1.email');
 //Route::post('/contactar', 'Email1Controller@contact')->name('contact');
 Route::post('/contactar', 'Email1Controller@contact');
+Route::post('/asignarproyecto', 'Email1Controller@asignarProyecto');
+Route::post('/asignaractividad', 'Email1Controller@asignarActividad');
+Route::post('/verificaractividad', 'Email1Controller@verificarActividad');
+Route::post('/rechazaractividad', 'Email1Controller@rechazarActividad');
+Route::post('/aprobaractividad', 'Email1Controller@aprobarActividad');
 
 
 Route::get('/proyectop/{id}','ProyectoController@proyectov')->name('proyectopriv.view');

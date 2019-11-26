@@ -53,4 +53,54 @@ class Email1Controller extends Controller
         });
         return redirect()->back();
     }
+    public function asignarProyecto(Request $request){
+        $subject = "</~asignación a un nuevo proyecto~/>";
+        $for = "5854@itescam.edu.mx";
+        Mail::send('mails.asignación-de-proyecto',$request->all(), function($msj) use($subject,$for){
+            $msj->from("jayrojesuskusalazar@gmail.com","webadminSSP");
+            $msj->subject($subject);
+            $msj->to($for);
+        });
+        return redirect()->back();
+    }
+    public function asignarActividad(Request $request){
+        $subject = "</~asignación de nueva actividad~/>";
+        $for = "5854@itescam.edu.mx";
+        Mail::send('mails.asignacion-de-actividad',$request->all(), function($msj) use($subject,$for){
+            $msj->from("jayrojesuskusalazar@gmail.com","webadminSSP");
+            $msj->subject($subject);
+            $msj->to($for);
+        });
+        return redirect()->back();
+    }
+    public function verificarActividad(Request $request){
+        $subject = "</~verificación de una actividad~/>";
+        $for = "5854@itescam.edu.mx";
+        Mail::send('mails.verificacion-de-actividad',$request->all(), function($msj) use($subject,$for){
+            $msj->from("jayrojesuskusalazar@gmail.com","webadminSSP");
+            $msj->subject($subject);
+            $msj->to($for);
+        });
+        return redirect()->back();
+    }
+    public function rechazarActividad(Request $request){
+        $subject = "</~Rechazo de una actividad~/>";
+        $for = "5854@itescam.edu.mx";
+        Mail::send('mails.correccion-de-actividad',$request->all(), function($msj) use($subject,$for){
+            $msj->from("jayrojesuskusalazar@gmail.com","webadminSSP");
+            $msj->subject($subject);
+            $msj->to($for);
+        });
+        return redirect()->back();
+    }
+    public function aprobarActividad(Request $request){
+        $subject = "</~Aprovación de una actividad~/>";
+        $for = "5854@itescam.edu.mx";
+        Mail::send('mails.aprobacion-de-actividades',$request->all(), function($msj) use($subject,$for){
+            $msj->from("jayrojesuskusalazar@gmail.com","webadminSSP");
+            $msj->subject($subject);
+            $msj->to($for);
+        });
+        return redirect()->back();
+    }
 }

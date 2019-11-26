@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
-    <title>Nuevo proyecto creado</title>
+    <title>Tarea Rechazada</title>
 </head>
 <body>
-    <p>¡Hola! Acabas de crear un nuevo proyecto con exito </p>
+    <p>¡Hola! tu actividad fue rechazada, corrige según los cambios dados por tu lider de proyecto</p>
 </body>
 </html>
